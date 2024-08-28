@@ -323,3 +323,6 @@ footer .line {
     color: white;
 }
 
+.col-spacing {
+    margin-right: 255px; /* Altere o valor para ajustar o espaço */
+}
