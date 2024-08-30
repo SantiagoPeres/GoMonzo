@@ -10,3 +10,31 @@ AOS.init({
   anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
 
 });
+
+// Função de callback para o Intersection Observer
+function handleIntersection(entries, observer) {
+  entries.forEach(entry => {
+      if (entry.isIntersecting) {
+          // Adiciona a classe 'visible' quando o elemento está visível
+          entry.target.classList.add('visible');
+          // Para de observar o mesmo elemento
+          observer.unobserve(entry.target);
+      }
+  });
+}
+
+// Cria uma instância do Intersection Observer
+const observer = new IntersectionObserver(handleIntersection, {
+  threshold: 0.1 // Quando 10% do elemento está visível
+});
+
+// Seleciona todos os elementos que desejamos animar
+const elements = document.querySelectorAll('[data-aos]');
+
+// Observa cada elemento
+elements.forEach(element => {
+  // Adiciona classes de animação baseadas no atributo data-aos
+  const animationClass = element.getAttribute('data-aos');
+  element.classList.add(animationClass);
+  observer.observe(element);
+});

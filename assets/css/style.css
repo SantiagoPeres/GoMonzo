@@ -84,6 +84,26 @@ img {
     color: var(--c-brand);
 }
 
+/* Logo estilo */
+.logo-text {
+    font-family: 'ClashDisplay', sans-serif; /* Substitua pela fonte desejada */
+    font-size: 24px; /* Tamanho da fonte da logo */
+    font-weight: bold; /* Peso da fonte */
+    color: var(--c-dark); /* Cor inicial da logo */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+}
+
+/* Animação de piscar quando o mouse passa */
+.logo-text:hover {
+    animation: blink 0.5s step-start infinite; /* Animação de piscar */
+}
+
+/* Definindo a animação de piscar */
+@keyframes blink {
+    50% {
+        color: transparent; /* Torna o texto invisível em 50% do tempo */
+    }
+}
 
 /* BTN */
 .btn {
@@ -274,6 +294,27 @@ img {
 }
 
 /* FOOTER */
+/* Logo estilo */
+.footer-logo-text {
+    font-family: 'ClashDisplay', sans-serif; /* Fonte da logo */
+    font-size: 24px; /* Tamanho da fonte da logo */
+    font-weight: bold; /* Peso da fonte */
+    color: var(--c-white); /* Cor inicial da logo branca */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+}
+
+/* Animação de piscar quando o mouse passa */
+.footer-logo-text:hover {
+    animation: blink 0.5s step-start infinite; /* Animação de piscar */
+}
+
+/* Definindo a animação de piscar */
+@keyframes blink {
+    50% {
+        color: transparent; /* Torna o texto invisível em 50% do tempo */
+    }
+}
+
 footer {
     padding-top: 120px;
 }
@@ -281,6 +322,14 @@ footer {
 .footer-top {
     padding-bottom: 40px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-top .container {
+    display: flex; /* Torna o container flexível */
+    justify-content: space-between; /* Distribui o espaço entre as colunas */
+    align-items: center; /* Alinha as colunas verticalmente ao centro */
+    flex-wrap: wrap; /* Permite que as colunas se alinhem corretamente em telas menores */
+    gap: 20px; /* Adiciona espaço entre as colunas */
 }
 
 .footer-bottom {
@@ -308,6 +357,14 @@ footer .line {
     margin-bottom: 24px;
 }
 
+footer-logo .line {
+    width: 40px;
+    height: 4px;
+    background-color: var(--c-brand);
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
 .social-icons a {
     width: 40px;
     height: 40px;
@@ -324,5 +381,57 @@ footer .line {
 }
 
 .col-spacing {
-    margin-right: 255px; /* Altere o valor para ajustar o espaço */
+    margin-right: 0px;
+}
+.footer-top .col-lg-3,
+.footer-top .col-sm-6 {
+    display: flex; /* Alinha os itens dentro das colunas */
+    flex-direction: column; /* Empilha os itens verticalmente */
+    align-items: center; /* Centraliza os itens na coluna */
+    text-align: center; /* Alinha o texto ao centro */
+    margin-bottom: 20px; /* Adiciona espaçamento inferior entre as colunas */
+}
+
+.line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--c-brand);
+    margin: 12px 0; /* Margem em cima e embaixo da linha */
+}
+
+/* Animaciones*/
+.fade-in {
+    opacity: 1 !important; /* Garante que o elemento fique visível por padrão */
+    transform: translateX(0) !important; /* Define a posição inicial */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    /* opacity: 0;
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; */
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-left {
+    transform: translateX(-20px);
+}
+
+.fade-right {
+    transform: translateX(20px);
+}
+
+.fade-up {
+    transform: translateY(20px);
+}
+
+/* Estilo inicial da frase */
+.hover-move {
+    display: inline-block; /* Permite a animação no elemento */
+    transition: transform 0.4s ease; /* Transição suave */
+}
+
+/* Estilo quando o mouse passa sobre a frase */
+.hover-move:hover {
+    transform: translateX(10px) translateY(-10px) !important; /* Força o movimento */
 }
