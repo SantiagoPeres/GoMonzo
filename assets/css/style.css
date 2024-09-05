@@ -129,7 +129,7 @@ img {
 
 /* HERO */
 #hero {
-    background: linear-gradient(rgba(var(--c-brand-rgb), 0.507), rgba(var(--c-brand-rgb), 0.438)), url(../images/hero-1.jpg);
+    background: linear-gradient(rgba(var(--c-brand-rgb), 0.207), rgba(var(--c-brand-rgb), 0.438)), url(../images/hero-1.jpg);
     background-position: center;
     background-size: cover;
 }
