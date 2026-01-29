@@ -22,14 +22,32 @@
             <a class="navbar-brand logo-text" href="#">
                 IBEROHUB.
             </a>
-            <!-- <a class="navbar-brand" href="#">
-                <img src="./assets/images/logo-dark.svg" alt="">
-            </a> -->
+            
+            <!-- Toggle Para Empresas / Para Profesionales -->
+            <div class="audience-toggle d-none d-lg-flex mx-auto">
+                <button class="toggle-btn active" data-audience="empresas">
+                    <i class="ri-building-line"></i> Para Empresas
+                </button>
+                <button class="toggle-btn" data-audience="profesionales">
+                    <i class="ri-user-star-line"></i> Para Profesionales
+                </button>
+            </div>
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Mobile Toggle -->
+                <div class="audience-toggle-mobile d-lg-none mb-3">
+                    <button class="toggle-btn-mobile active" data-audience="empresas">
+                        <i class="ri-building-line"></i> Para Empresas
+                    </button>
+                    <button class="toggle-btn-mobile" data-audience="profesionales">
+                        <i class="ri-user-star-line"></i> Para Profesionales
+                    </button>
+                </div>
+                
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#hero">Inicio</a>
@@ -44,7 +62,8 @@
                         <a class="nav-link" href="#contact">Contacto</a>
                     </li>
                 </ul>
-                <a href="#contact" class="btn btn-brand ms-lg-3">Pide Tu Talento Ahora</a>
+                <a href="#contact" class="btn btn-brand ms-lg-3 cta-empresas">Pide Tu Talento Ahora</a>
+                <a href="vacantes.html" class="btn btn-brand ms-lg-3 cta-profesionales" style="display: none;">Ver Vacantes</a>
             </div>
         </div>
     </nav>   
@@ -52,12 +71,25 @@
     <!-- HERO -->
     <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
         <div class="container">
-            <div class="row">
+            <!-- Contenido Para Empresas -->
+            <div class="row hero-empresas">
                 <div class="col-12">
                     <h1 data-aos="fade-left" class="fade-in text-uppercase text-white fw-semibold display-1 hover-move bordered-text">Talento Tech en 7 Días o Tu Dinero de Vuelta</h1>
                     <h5 class="text-white mt-4 mb-4" data-aos="fade-right" style="max-width: 800px; margin: 0 auto;">¿Necesitas un dev, diseñador o especialista tech? Iberohub entrega el talento correcto en España en 7 días, con garantía total. Di el perfil, recibe el CV.</h5>
                     <div data-aos="fade-up" data-aos-delay="50">
                         <a href="#" class="btn btn-brand me-2" data-bs-toggle="modal" data-bs-target="#contactModal">Habla Conmigo Ahora</a>
+                        <a href="#como-funciona" class="btn btn-light ms-2">Cómo Funciona</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido Para Profesionales -->
+            <div class="row hero-profesionales" style="display: none;">
+                <div class="col-12">
+                    <h1 data-aos="fade-left" class="fade-in text-uppercase text-white fw-semibold display-1 hover-move bordered-text">Tu Próxima Oportunidad Tech Te Está Esperando</h1>
+                    <h5 class="text-white mt-4 mb-4" data-aos="fade-right" style="max-width: 800px; margin: 0 auto;">Conectamos profesionales tech con las mejores empresas en España. Accede a proyectos remotos, contratos estables y oportunidades que impulsan tu carrera.</h5>
+                    <div data-aos="fade-up" data-aos-delay="50">
+                        <a href="vacantes.html" class="btn btn-brand me-2">Ver Vacantes Disponibles</a>
                         <a href="#como-funciona" class="btn btn-light ms-2">Cómo Funciona</a>
                     </div>
                 </div>
@@ -165,47 +197,97 @@
     <!-- COMO FUNCIONA -->
     <section id="como-funciona" class="section-padding bg-light">
         <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Cómo Funciona</h1>
-                        <div class="line"></div>
-                        <p>Un proceso simple, rápido y transparente para encontrar el talento perfecto</p>
+            <!-- Para Empresas -->
+            <div class="content-empresas">
+                <div class="row">
+                    <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
+                        <div class="section-title">
+                            <h1 class="display-4 fw-semibold">Cómo Funciona Para Empresas</h1>
+                            <div class="line"></div>
+                            <p>Un proceso simple, rápido y transparente para encontrar el talento perfecto</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">1</h2>
+                            </div>
+                            <h4>Tú Dices el Perfil</h4>
+                            <p>Contacta conmigo y dime exactamente lo que necesitas: tipo de especialista, stack tecnológico, presupuesto y plazo.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="250">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">2</h2>
+                            </div>
+                            <h4>Nosotros Enviamos los CVs</h4>
+                            <p>En hasta 7 días, recibes CVs de profesionales cualificados y verificados, listos para entrevista.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="350">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">3</h2>
+                            </div>
+                            <h4>Contrato Firmado</h4>
+                            <p>Tú eliges, entrevistas y contratas. Nosotros nos encargamos de toda la burocracia para que el profesional empiece lo antes posible.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <a href="#" class="btn btn-brand btn-lg" data-bs-toggle="modal" data-bs-target="#contactModal">Empezar Ahora</a>
                     </div>
                 </div>
             </div>
-            <div class="row g-4 mt-4">
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="150">
-                    <div class="text-center p-4">
-                        <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                            <h2 class="mb-0 text-brand">1</h2>
+            
+            <!-- Para Profesionales -->
+            <div class="content-profesionales" style="display: none;">
+                <div class="row">
+                    <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
+                        <div class="section-title">
+                            <h1 class="display-4 fw-semibold">Cómo Funciona Para Profesionales</h1>
+                            <div class="line"></div>
+                            <p>Tres pasos simples para acceder a las mejores oportunidades tech en España</p>
                         </div>
-                        <h4>Tú Dices el Perfil</h4>
-                        <p>Contacta conmigo y dime exactamente lo que necesitas: tipo de especialista, stack tecnológico, presupuesto y plazo.</p>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="250">
-                    <div class="text-center p-4">
-                        <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                            <h2 class="mb-0 text-brand">2</h2>
+                <div class="row g-4 mt-4">
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="150">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">1</h2>
+                            </div>
+                            <h4>Regístrate Gratis</h4>
+                            <p>Completa tu perfil con tu experiencia, stack tecnológico y preferencias salariales. Solo toma 5 minutos.</p>
                         </div>
-                        <h4>Yo Envío los CVs</h4>
-                        <p>En hasta 7 días, recibes CVs de profesionales cualificados y verificados, listos para entrevista.</p>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="250">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">2</h2>
+                            </div>
+                            <h4>Te Conectamos</h4>
+                            <p>Cuando una empresa busque tu perfil, te contactamos. Solo presentamos oportunidades que coincidan con tus expectativas.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="350">
+                        <div class="text-center p-4">
+                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
+                                <h2 class="mb-0 text-brand">3</h2>
+                            </div>
+                            <h4>Empieza a Trabajar</h4>
+                            <p>Entrevista con la empresa, negocia condiciones y firma. Nosotros te acompañamos en todo el proceso.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="350">
-                    <div class="text-center p-4">
-                        <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                            <h2 class="mb-0 text-brand">3</h2>
-                        </div>
-                        <h4>Contrato Firmado</h4>
-                        <p>Tú eliges, entrevistas y contratas. Yo me encargo de toda la burocracia para que el profesional empiece lo antes posible.</p>
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <a href="vacantes.html" class="btn btn-brand btn-lg">Ver Vacantes Disponibles</a>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12 text-center">
-                    <a href="#" class="btn btn-brand btn-lg" data-bs-toggle="modal" data-bs-target="#contactModal">Empezar Ahora</a>
                 </div>
             </div>
         </div>
@@ -731,7 +813,58 @@
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <script>UPLOADCARE_PUBLIC_KEY = "091573fb52e608168d0d";</script>
     <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.lang.es.min.js"></script>  
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.lang.es.min.js"></script>
+    
+    <!-- Toggle Empresas/Profesionales Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.toggle-btn, .toggle-btn-mobile');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const audience = this.getAttribute('data-audience');
+                    
+                    // Actualizar botones activos
+                    document.querySelectorAll('.toggle-btn, .toggle-btn-mobile').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelectorAll(`[data-audience="${audience}"]`).forEach(btn => {
+                        btn.classList.add('active');
+                    });
+                    
+                    // Mostrar/ocultar contenido
+                    if (audience === 'empresas') {
+                        // Hero
+                        document.querySelector('.hero-empresas').style.display = 'block';
+                        document.querySelector('.hero-profesionales').style.display = 'none';
+                        
+                        // Como Funciona
+                        document.querySelector('.content-empresas').style.display = 'block';
+                        document.querySelector('.content-profesionales').style.display = 'none';
+                        
+                        // CTAs
+                        document.querySelector('.cta-empresas').style.display = 'inline-block';
+                        document.querySelector('.cta-profesionales').style.display = 'none';
+                    } else {
+                        // Hero
+                        document.querySelector('.hero-empresas').style.display = 'none';
+                        document.querySelector('.hero-profesionales').style.display = 'block';
+                        
+                        // Como Funciona
+                        document.querySelector('.content-empresas').style.display = 'none';
+                        document.querySelector('.content-profesionales').style.display = 'block';
+                        
+                        // CTAs
+                        document.querySelector('.cta-empresas').style.display = 'none';
+                        document.querySelector('.cta-profesionales').style.display = 'inline-block';
+                    }
+                    
+                    // Scroll suave al inicio
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
 
       
 </body>
