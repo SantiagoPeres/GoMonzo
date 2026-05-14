@@ -310,6 +310,143 @@
         });
     };
 
+    /* ---------- Iberofinance carousel — cursor falso + click + image swap ----------
+       Timeline: moving 1100ms → acting 350ms → showing+holding 2400ms → next step.
+       La imagen NO cambia hasta que el cursor "actúa" (causa-efecto).
+    */
+    const initIberofinanceCarousel = () => {
+        const root = document.getElementById('iberofinance-carousel');
+        if (!root) return;
+
+        const STEPS = [
+            { x: 0.245, y: 0.022, label: 'Painel',           action: 'click'  },
+            { x: 0.305, y: 0.022, label: 'Carteira',         action: 'click'  },
+            { x: 0.52,  y: 0.62,  label: 'Explorar activos', action: 'scroll' },
+            { x: 0.395, y: 0.022, label: 'Fluxo de caixa',   action: 'click'  },
+            { x: 0.555, y: 0.022, label: 'Robôs',            action: 'click'  },
+            { x: 0.625, y: 0.022, label: 'Simulação',        action: 'click'  }
+        ];
+
+        const imgs = Array.from(root.querySelectorAll('.carousel-img'));
+        const dots = Array.from(root.querySelectorAll('.pdot'));
+        const cursor = root.querySelector('.fake-cursor');
+        const label = root.querySelector('.cursor-label');
+        if (!imgs.length || !cursor) return;
+
+        let step = 0;
+        let timeouts = [];
+        let active = false;
+
+        const clearTimeouts = () => {
+            timeouts.forEach((t) => clearTimeout(t));
+            timeouts = [];
+        };
+
+        const setActiveImage = (idx) => {
+            imgs.forEach((img, i) => img.classList.toggle('is-active', i === idx));
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        };
+
+        const setPhase = (phase, isClick) => {
+            cursor.classList.toggle('is-moving', phase === 'moving');
+            cursor.classList.toggle('is-acting', phase === 'acting');
+            cursor.classList.toggle('is-showing', phase === 'showing');
+            cursor.classList.toggle('is-click',  phase === 'acting' && isClick);
+            cursor.classList.toggle('is-scroll', phase === 'acting' && !isClick);
+        };
+
+        const runStep = () => {
+            if (!active) return;
+            const cur = STEPS[step];
+            const prevIdx = (step - 1 + STEPS.length) % STEPS.length;
+            const isClick = cur.action === 'click';
+
+            // Mostrar imagen anterior mientras el cursor se mueve
+            setActiveImage(prevIdx);
+            if (label) label.textContent = cur.label;
+
+            // Posicionar cursor → target (CSS transition se encarga del movimiento)
+            cursor.style.left = (cur.x * 100) + '%';
+            cursor.style.top  = (cur.y * 100) + '%';
+            setPhase('moving', isClick);
+
+            // 1100ms: moving completo, ahora "actúa"
+            timeouts.push(setTimeout(() => {
+                if (!active) return;
+                setPhase('acting', isClick);
+
+                // Re-disparar la animación del ripple si fue click (clone-replace para reiniciar la animación)
+                if (isClick) {
+                    const ripple = cursor.querySelector('.ripple');
+                    if (ripple) {
+                        const clone = ripple.cloneNode(true);
+                        ripple.parentNode.replaceChild(clone, ripple);
+                    }
+                }
+            }, 1100));
+
+            // 1450ms (1100 moving + 350 acting): swap a la imagen del paso actual
+            timeouts.push(setTimeout(() => {
+                if (!active) return;
+                setActiveImage(step);
+                setPhase('showing', isClick);
+            }, 1450));
+
+            // 3850ms total: pasar al siguiente paso
+            timeouts.push(setTimeout(() => {
+                if (!active) return;
+                step = (step + 1) % STEPS.length;
+                runStep();
+            }, 3850));
+        };
+
+        const startCarousel = () => {
+            if (active) return;
+            active = true;
+            runStep();
+        };
+        const stopCarousel = () => {
+            active = false;
+            clearTimeouts();
+        };
+
+        // Estado inicial: cursor en target del paso 0, imagen 0 visible.
+        cursor.style.left = (STEPS[0].x * 100) + '%';
+        cursor.style.top  = (STEPS[0].y * 100) + '%';
+        setActiveImage(0);
+        if (label) label.textContent = STEPS[0].label;
+
+        if (prefersReducedMotion) {
+            // Sólo crossfade entre imágenes, sin cursor
+            cursor.style.display = 'none';
+            let i = 0;
+            setInterval(() => {
+                i = (i + 1) % imgs.length;
+                setActiveImage(i);
+            }, 4000);
+            return;
+        }
+
+        // Pausar cuando el card está fuera del viewport
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting && e.intersectionRatio > 0.15) startCarousel();
+                    else stopCarousel();
+                });
+            }, { threshold: [0, 0.15, 0.5] });
+            io.observe(root);
+        } else {
+            startCarousel();
+        }
+
+        // Pausar con pestaña inactiva
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stopCarousel();
+            else startCarousel();
+        });
+    };
+
     /* ---------- HOOK filename rotator ---------- */
     const initHookFilename = () => {
         const el = document.getElementById('hook-filename');
@@ -329,6 +466,7 @@
         initStack();
         initSignal();
         initHookFilename();
+        initIberofinanceCarousel();
     };
 
     if (document.readyState === 'loading') {

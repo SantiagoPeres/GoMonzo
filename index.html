@@ -181,15 +181,40 @@
                 </div>
 
                 <div class="folder-right">
-                    <div class="browser-frame">
+                    <div class="browser-frame" id="iberofinance-carousel">
                         <div class="browser-bar">
                             <span class="dot r"></span><span class="dot a"></span><span class="dot g"></span>
                             <span class="url">iberofinance.com</span>
+                            <span class="live-pill"><span class="live-dot" aria-hidden="true"></span>LIVE DEMO</span>
                         </div>
-                        <img src="./assets/images/iberofinance-dashboard.webp"
-                             alt="Captura del dashboard de Iberofinance"
-                             width="976" height="958"
-                             loading="lazy" decoding="async">
+                        <div class="carousel">
+                            <img class="carousel-img" data-step="0" src="./assets/images/iberofinance/01-painel.png" alt="Panel principal de Iberofinance" loading="eager" decoding="async">
+                            <img class="carousel-img" data-step="1" src="./assets/images/iberofinance/02-carteira.png" alt="Cartera" loading="lazy" decoding="async">
+                            <img class="carousel-img" data-step="2" src="./assets/images/iberofinance/03-ativos.png" alt="Explorar activos" loading="lazy" decoding="async">
+                            <img class="carousel-img" data-step="3" src="./assets/images/iberofinance/04-fluxo.png" alt="Flujo de caja" loading="lazy" decoding="async">
+                            <img class="carousel-img" data-step="4" src="./assets/images/iberofinance/05-bots.png" alt="Robots inteligentes" loading="lazy" decoding="async">
+                            <img class="carousel-img" data-step="5" src="./assets/images/iberofinance/06-simulacao.png" alt="Simulación" loading="lazy" decoding="async">
+
+                            <div class="fake-cursor" id="fake-cursor" aria-hidden="true">
+                                <svg viewBox="0 0 20 24" width="20" height="24" fill="none">
+                                    <path d="M2 2 L2 17 L6.5 13 L9.5 20 L12 19 L9 12 L15 12 Z"
+                                          fill="#ffffff" stroke="#0e2335"
+                                          stroke-width="1.2" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="cursor-label" id="cursor-label">Painel</span>
+                                <span class="ripple" id="cursor-ripple"></span>
+                                <span class="scroll-burst" id="cursor-scroll"></span>
+                            </div>
+
+                            <div class="carousel-progress" aria-hidden="true">
+                                <span class="pdot" data-step="0"></span>
+                                <span class="pdot" data-step="1"></span>
+                                <span class="pdot" data-step="2"></span>
+                                <span class="pdot" data-step="3"></span>
+                                <span class="pdot" data-step="4"></span>
+                                <span class="pdot" data-step="5"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </article>
