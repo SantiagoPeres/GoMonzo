@@ -1,0 +1,26 @@
+# Playwright MCP browser data
+.playwright-mcp/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Capturas temporales de fases de rediseño
+phase1-*.png
+phase2-*.png
+phase3-*.png
+
+# Design handoff bundle (no es código del sitio)
+design_handoff_iberohub/
+iberohub-preview.html
+
+# Patch / brief docs (instrucciones de trabajo, no código)
+IBEROHUB_PATCH_*.md
+IBEROHUB_BRIEF_*.md
+
+# Project docs locales (no se publican)
+CLAUDE.md
+
+# PNG duplicado del dashboard (mantenemos solo .webp)
+assets/images/iberofinance-dashboard.png

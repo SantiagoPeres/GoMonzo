@@ -1,871 +1,428 @@
-
 <!doctype html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Iberohub - Talento Tech en 7 Días o Tu Dinero de Vuelta</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <title>Iberohub — Venture Studio · Madrid</title>
+    <meta name="description" content="Iberohub es un venture studio de Madrid. Construimos productos propios. Fintech, auditoría, SaaS, uno a uno, sin prisa. Iberofinance fue el primero.">
+
+    <meta property="og:title" content="Iberohub. Venture studio en Madrid">
+    <meta property="og:description" content="Construimos productos propios. Iberofinance fue el primero.">
+    <meta property="og:image" content="https://iberohub.com/assets/images/og-iberohub-v2.png">
+    <meta property="og:url" content="https://iberohub.com">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="./assets/images/favicon.png" sizes="1024x1024" type="image/png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Familjen+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="icon" href="./assets/images/favicon.png" sizes="1024x1024" type="image/svg+xml">
+    <script defer src="./assets/js/main.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Iberohub",
+      "url": "https://iberohub.com",
+      "description": "Venture studio de Madrid que construye, opera y escala sus propios productos de software.",
+      "address": { "@type": "PostalAddress", "addressLocality": "Madrid", "addressCountry": "ES" },
+      "founder": { "@type": "Person", "name": "Santiago Monzo" },
+      "subOrganization": [
+        { "@type": "Organization", "name": "Iberofinance", "url": "https://iberofinance.com" }
+      ]
+    }
+    </script>
 </head>
 
-<body data-bs-spy="scroll" data-bs-target=".navbar">
+<body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg bg-white sticky-top">
-        <div class="container">
-            <a class="navbar-brand logo-text" href="#">
-                IBEROHUB.
+    <!-- ====================== NAV ====================== -->
+    <nav class="nav" id="nav">
+        <a class="brand" href="#top" aria-label="Iberohub. Inicio">
+            Iberohub<span class="dot" aria-hidden="true"></span>
+        </a>
+        <div class="links">
+            <a href="#productos">Productos</a>
+            <a href="#tesis">Tesis</a>
+            <a href="#estudio">Estudio</a>
+            <a href="#contacto">Contacto</a>
+        </div>
+        <a href="mailto:hola@iberohub.com" class="cta">Hablemos</a>
+    </nav>
+
+    <main id="top">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="hero" id="hero">
+        <div class="hero-cursor-glow" aria-hidden="true"></div>
+
+        <div class="hero-bg" aria-hidden="true">
+            <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+                <g class="lines" id="hero-lines"><!-- paths generadas por JS --></g>
+            </svg>
+        </div>
+        <div class="hero-grain" aria-hidden="true"></div>
+
+        <div class="eyebrow">
+            <span class="pulse" aria-hidden="true"></span>
+            Venture Studio · Madrid · Est. 2025
+        </div>
+
+        <h1 class="iberohub-mark" id="iberohub-mark"
+            data-letters="IBEROHUB"
+            aria-label="IBEROHUB"></h1>
+
+        <h2 class="hero-sub" id="hero-sub" aria-live="polite">
+            <span class="sub-phrase is-active" data-phrase="0">El futuro del software es <em>hoy.</em></span>
+            <span class="sub-phrase" data-phrase="1">Construido en Madrid, pensado para el <em>mundo.</em></span>
+            <span class="sub-phrase" data-phrase="2">Productos propios, sin <em>prisa.</em></span>
+            <span class="sub-phrase" data-phrase="3">Software del mañana, <em>hoy.</em></span>
+            <span class="sub-phrase" data-phrase="4">Iterar es respetar al <em>usuario.</em></span>
+        </h2>
+
+        <p class="hero-body">
+            Construimos productos propios desde Madrid. Fintech, auditoría, SaaS,
+            uno a uno, sin prisa, hasta que respiren solos.
+            <strong>Iberofinance fue el primero.</strong>
+        </p>
+
+        <div class="hero-ctas">
+            <a href="#productos" class="btn primary">
+                Ver el portfolio <span class="arrow">→</span>
             </a>
-            
-            <!-- Toggle Para Empresas / Para Profesionales -->
-            <div class="audience-toggle d-none d-lg-flex mx-auto">
-                <button class="toggle-btn active" data-audience="empresas">
-                    <i class="ri-building-line"></i> Para Empresas
-                </button>
-                <button class="toggle-btn" data-audience="profesionales">
-                    <i class="ri-user-star-line"></i> Para Profesionales
-                </button>
-            </div>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- Mobile Toggle -->
-                <div class="audience-toggle-mobile d-lg-none mb-3">
-                    <button class="toggle-btn-mobile active" data-audience="empresas">
-                        <i class="ri-building-line"></i> Para Empresas
-                    </button>
-                    <button class="toggle-btn-mobile" data-audience="profesionales">
-                        <i class="ri-user-star-line"></i> Para Profesionales
-                    </button>
-                </div>
-                
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#hero">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about">Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#como-funciona">Cómo Funciona</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contacto</a>
-                    </li>
-                </ul>
-                <a href="#contact" class="btn btn-brand ms-lg-3 cta-empresas">Pide Tu Talento Ahora</a>
-                <a href="vacantes.html" class="btn btn-brand ms-lg-3 cta-profesionales" style="display: none;">Ver Vacantes</a>
-            </div>
+            <a href="mailto:hola@iberohub.com" class="btn ghost">
+                hola@iberohub.com <span class="arrow">→</span>
+            </a>
         </div>
-    </nav>   
 
-    <!-- HERO -->
-    <section id="hero" class="min-vh-100 d-flex align-items-center text-center">
-        <div class="container">
-            <!-- Contenido Para Empresas -->
-            <div class="row hero-empresas">
-                <div class="col-12">
-                    <h1 data-aos="fade-left" class="fade-in text-uppercase text-white fw-semibold display-1 hover-move bordered-text">Talento Tech en 7 Días o Tu Dinero de Vuelta</h1>
-                    <h5 class="text-white mt-4 mb-4" data-aos="fade-right" style="max-width: 800px; margin: 0 auto;">¿Necesitas un dev, diseñador o especialista tech? Iberohub entrega el talento correcto en España en 7 días, con garantía total. Di el perfil, recibe el CV.</h5>
-                    <div data-aos="fade-up" data-aos-delay="50">
-                        <a href="#" class="btn btn-brand me-2" data-bs-toggle="modal" data-bs-target="#contactModal">Habla Conmigo Ahora</a>
-                        <a href="#como-funciona" class="btn btn-light ms-2">Cómo Funciona</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contenido Para Profesionales -->
-            <div class="row hero-profesionales" style="display: none;">
-                <div class="col-12">
-                    <h1 data-aos="fade-left" class="fade-in text-uppercase text-white fw-semibold display-1 hover-move bordered-text">Tu Próxima Oportunidad Tech Te Está Esperando</h1>
-                    <h5 class="text-white mt-4 mb-4" data-aos="fade-right" style="max-width: 800px; margin: 0 auto;">Conectamos profesionales tech con las mejores empresas en España. Accede a proyectos remotos, contratos estables y oportunidades que impulsan tu carrera.</h5>
-                    <div data-aos="fade-up" data-aos-delay="50">
-                        <a href="vacantes.html" class="btn btn-brand me-2">Ver Vacantes Disponibles</a>
-                        <a href="#como-funciona" class="btn btn-light ms-2">Cómo Funciona</a>
-                    </div>
-                </div>
+        <div class="hero-bottom">
+            <a href="#productos" class="scroll-hint">
+                <span class="arrow-down" aria-hidden="true"></span>
+                Conoce los productos
+            </a>
+            <div class="hero-stack-status" aria-label="Estado de los productos">
+                <div class="item"><span class="marker" aria-hidden="true"></span>01 Vivo</div>
+                <div class="item dev"><span class="marker" aria-hidden="true"></span>02 Dev</div>
+                <div class="item dev"><span class="marker" aria-hidden="true"></span>03 Estudio</div>
+                <div class="item hook"><span class="marker" aria-hidden="true"></span>04 Tú</div>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Sobre Nosotros</h1>
-                        <div class="line"></div>
-                        <p>Iberohub es una consultora especializada en outsourcing de talento tecnológico en España. Con más de 10 años de experiencia, conectamos empresas con los mejores profesionales tech del mercado.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-between align-items-center">
-                <div class="col-lg-6" data-aos="fade-down" data-aos-delay="50">
-                    <img src="./assets/images/about.jpg" alt="">
-                </div>
-                <div data-aos="fade-down" data-aos-delay="150" class="col-lg-5">
-                    <h1>¿Por Qué Elegir Iberohub?</h1>
-                    <div class="d-flex pt-4 mb-3">
-                        <div class="iconbox me-4">
-                            <i class="ri-time-line"></i>
-                        </div>
-                        <div>
-                            <h5>Entrega en 7 Días:</h5>
-                            <p>Encontramos y presentamos el especialista perfecto para tu empresa en hasta 7 días. Si no lo logramos, recibes tu dinero de vuelta.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex mb-3">
-                        <div class="iconbox me-4">
-                            <i class="ri-user-5-fill"></i>
-                        </div>
-                        <div>
-                            <h5>Talento Verificado:</h5>
-                            <p>Cada profesional pasa por un filtro riguroso. Recibes solo CVs de especialistas cualificados y listos para empezar.</p>
-                       </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="iconbox me-4">
-                            <i class="ri-shield-check-line"></i>
-                        </div>
-                        <div>
-                            <h5>Garantía Total:</h5>
-                            <p>Trabajamos con transparencia y compromiso. Si el talento no cumple tus expectativas, lo reemplazamos sin coste adicional.</p>
-                        </div>
-                    </div>
-                </div>
+    <!-- ====================== BANNER · ARTILLERÍA USADA + MANIFIESTO ====================== -->
+    <section class="artilleria" aria-labelledby="artilleria-label">
+        <p class="artilleria-label" id="artilleria-label">Artillería usada · Stack</p>
+
+        <div class="artilleria-marquee" id="artilleria-marquee">
+            <div class="artilleria-track">
+                <span class="art-item">Angular</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">NestJS</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">.NET</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">Python</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">PostgreSQL</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">AWS</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">TypeScript</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item">Docker</span><span class="art-sep" aria-hidden="true">•</span>
+                <!-- duplicado para loop seamless -->
+                <span class="art-item" aria-hidden="true">Angular</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">NestJS</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">.NET</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">Python</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">PostgreSQL</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">AWS</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">TypeScript</span><span class="art-sep" aria-hidden="true">•</span>
+                <span class="art-item" aria-hidden="true">Docker</span><span class="art-sep" aria-hidden="true">•</span>
             </div>
         </div>
+
+        <h2 class="manifesto" id="manifesto">
+            <span class="manifesto-line line-a">Cada producto, una empresa.</span>
+            <span class="manifesto-line line-b"><em>Construida para durar.</em></span>
+        </h2>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services" class="section-padding border-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Qué Hacemos</h1>
-                        <div class="line"></div>
-                        <p class="lead">Outsourcing de talento tecnológico: devs, diseñadores, data analysts – el especialista que tu empresa necesita, en el momento justo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-4 text-center mt-4">
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="150">
-                    <div class="service theme-shadow p-lg-5 p-4">
-                        <div class="iconbox">
-                            <i class="ri-code-box-line"></i>
-                        </div>
-                        <h5 class="mt-4 mb-3">Desarrolladores</h5>
-                        <p>Dev Full-Stack, Frontend, Backend, Mobile – cualquier stack que necesites.</p>
-                        <p class="text-muted small">Ej.: Dev Full-Stack, 50k/año</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="250">
-                    <div class="service theme-shadow p-lg-5 p-4">
-                        <div class="iconbox">
-                            <i class="ri-pantone-line"></i>
-                        </div>
-                        <h5 class="mt-4 mb-3">Diseñadores</h5>
-                        <p>UX/UI Designer, Product Designer, Design Systems – para crear productos increíbles.</p>
-                        <p class="text-muted small">Ej.: Diseñador UX, 45k/año</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="350">
-                    <div class="service theme-shadow p-lg-5 p-4">
-                        <div class="iconbox">
-                            <i class="ri-database-2-line"></i>
-                        </div>
-                        <h5 class="mt-4 mb-3">Data & Cloud</h5>
-                        <p>Data Analysts, Data Engineers, Consultores Cloud – para optimizar tus datos e infraestructura.</p>
-                        <p class="text-muted small">Ej.: Consultor Cloud, 60k/año</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ====================== STACK DE FOLDERS ====================== -->
+    <section class="stack-section" id="productos">
+        <div class="aurora" aria-hidden="true"></div>
+        <div class="stack-wrap">
 
-    <!-- COMO FUNCIONA -->
-    <section id="como-funciona" class="section-padding bg-light">
-        <div class="container">
-            <!-- Para Empresas -->
-            <div class="content-empresas">
-                <div class="row">
-                    <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
-                        <div class="section-title">
-                            <h1 class="display-4 fw-semibold">Cómo Funciona Para Empresas</h1>
-                            <div class="line"></div>
-                            <p>Un proceso simple, rápido y transparente para encontrar el talento perfecto</p>
-                        </div>
-                    </div>
+            <!-- Folder 01 — Iberofinance -->
+            <article class="folder f01" data-card="01">
+                <div class="folder-tab"><span class="tab-dot" aria-hidden="true"></span> 01 · Iberofinance</div>
+                <div class="folder-meta">
+                    <span class="label-l">Producto 01 / 04</span>
+                    <span class="status-pill"><span class="dot" aria-hidden="true"></span>En producción</span>
                 </div>
-                <div class="row g-4 mt-4">
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="150">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">1</h2>
-                            </div>
-                            <h4>Tú Dices el Perfil</h4>
-                            <p>Contacta conmigo y dime exactamente lo que necesitas: tipo de especialista, stack tecnológico, presupuesto y plazo.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="250">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">2</h2>
-                            </div>
-                            <h4>Nosotros Enviamos los CVs</h4>
-                            <p>En hasta 7 días, recibes CVs de profesionales cualificados y verificados, listos para entrevista.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="350">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">3</h2>
-                            </div>
-                            <h4>Contrato Firmado</h4>
-                            <p>Tú eliges, entrevistas y contratas. Nosotros nos encargamos de toda la burocracia para que el profesional empiece lo antes posible.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-12 text-center">
-                        <a href="#" class="btn btn-brand btn-lg" data-bs-toggle="modal" data-bs-target="#contactModal">Empezar Ahora</a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Para Profesionales -->
-            <div class="content-profesionales" style="display: none;">
-                <div class="row">
-                    <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
-                        <div class="section-title">
-                            <h1 class="display-4 fw-semibold">Cómo Funciona Para Profesionales</h1>
-                            <div class="line"></div>
-                            <p>Tres pasos simples para acceder a las mejores oportunidades tech en España</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-4 mt-4">
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="150">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">1</h2>
-                            </div>
-                            <h4>Regístrate Gratis</h4>
-                            <p>Completa tu perfil con tu experiencia, stack tecnológico y preferencias salariales. Solo toma 5 minutos.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="250">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">2</h2>
-                            </div>
-                            <h4>Te Conectamos</h4>
-                            <p>Cuando una empresa busque tu perfil, te contactamos. Solo presentamos oportunidades que coincidan con tus expectativas.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="350">
-                        <div class="text-center p-4">
-                            <div class="iconbox mx-auto mb-4" style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center;">
-                                <h2 class="mb-0 text-brand">3</h2>
-                            </div>
-                            <h4>Empieza a Trabajar</h4>
-                            <p>Entrevista con la empresa, negocia condiciones y firma. Nosotros te acompañamos en todo el proceso.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <div class="col-12 text-center">
-                        <a href="vacantes.html" class="btn btn-brand btn-lg">Ver Vacantes Disponibles</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="folder-divider" aria-hidden="true"></div>
 
-    <!-- RESULTADOS -->
-    <section id="resultados" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="50">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Resultados Comprobados</h1>
-                        <div class="line"></div>
-                        <p>Empresas que confiaron y tuvieron éxito con Iberohub</p>
+                <div class="folder-left">
+                    <h2>Iberofinance</h2>
+                    <p class="lede">Fintech española moderna.</p>
+                    <p class="desc">
+                        Una fintech construida desde cero. Sale a producción en 2026 y es el primer
+                        producto del estudio. La prueba viva de cómo trabajamos: con tiempo, sin atajos,
+                        y respetando a quien la usa.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Angular</span>
+                        <span class="tag">NestJS</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">AWS</span>
                     </div>
+                    <a class="link" href="https://iberofinance.com" target="_blank" rel="noopener">
+                        Visitar iberofinance.com <span class="arrow">→</span>
+                    </a>
                 </div>
-            </div>
-            <div class="row g-4 mt-4">
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
-                    <div class="p-5 bg-light theme-shadow h-100">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="iconbox me-3">
-                                <i class="ri-check-double-line"></i>
-                            </div>
-                            <h4 class="mb-0">Dev React entregado en 5 días</h4>
-                        </div>
-                        <p class="mb-0">Colocamos un desarrollador React en una startup de Barcelona. El cliente lo necesitaba urgente, lo entregamos en 5 días con un profesional senior y experimentado.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="250">
-                    <div class="p-5 theme-shadow h-100" style="background: #f8f9fa;">
-                        <div class="mb-4">
-                            <div class="text-warning mb-2">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p class="fst-italic">"Iberohub entregó rápido y dentro del presupuesto. El profesional que contratamos superó nuestras expectativas. ¡Recomiendo!"</p>
-                        </div>
-                        <p class="mb-0 fw-bold">— Startup Tech, Barcelona</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- COUNTER -->
-    <!-- <section id="counter" class="section-padding">
-        <div class="container text-center">
-            <div class="row g-4">
-                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="150">
-                    <h1 class="text-white display-4">90,00+</h1>
-                    <h6 class="text-uppercase mb-0 text-white mt-3">Total Downloads</h6>
+                <div class="folder-right">
+                    <div class="browser-frame">
+                        <div class="browser-bar">
+                            <span class="dot r"></span><span class="dot a"></span><span class="dot g"></span>
+                            <span class="url">iberofinance.com</span>
+                        </div>
+                        <img src="./assets/images/iberofinance-dashboard.webp"
+                             alt="Captura del dashboard de Iberofinance"
+                             width="976" height="958"
+                             loading="lazy" decoding="async">
+                    </div>
                 </div>
-                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="250">
-                    <h1 class="text-white display-4">58K+</h1>
-                    <h6 class="text-uppercase mb-0 text-white mt-3">Trusted Clients</h6>
-                </div>
-                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="350">
-                    <h1 class="text-white display-4">5M+</h1>
-                    <h6 class="text-uppercase mb-0 text-white mt-3">THemes Designed</h6>
-                </div>
-                <div class="col-lg-3 col-sm-6" data-aos="fade-down" data-aos-delay="450">
-                    <h1 class="text-white display-4">100+</h1>
-                    <h6 class="text-uppercase mb-0 text-white mt-3">Team Members</h6>
-                </div>
-            </div>
-        </div>
-    </section> -->
+            </article>
 
-    <!-- PORTFOLIO -->
-    <!-- <section id="portfolio" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Our Portfolio</h1>
-                        <div class="line"></div>
-                        <p>We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p>
-                    </div>
+            <!-- Folder 02 — Auditoría -->
+            <article class="folder f02" data-card="02">
+                <div class="folder-tab"><span class="tab-dot" aria-hidden="true"></span> 02 · Auditoría</div>
+                <div class="folder-meta">
+                    <span class="label-l">Producto 02 / 04</span>
+                    <span class="status-pill"><span class="dot" aria-hidden="true"></span>En desarrollo</span>
                 </div>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-1.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-1.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-2.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-2.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-3.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-3.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-4.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-4.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                    <div class="portfolio-item image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-5.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-5.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                    <div class="portfolio-item image-zoom mt-4">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/project-6.jpg" alt="">
-                        </div>
-                        <a href="./assets/images/project-6.jpg" data-fancybox="gallery" class="iconbox"><i class="ri-search-2-line"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
+                <div class="folder-divider" aria-hidden="true"></div>
 
-    <!-- REVIEW -->
-    <!-- <section id="reviews" class="section-padding bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Testimonials</h1>
-                        <div class="line"></div>
-                        <p>We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p>
+                <div class="folder-left">
+                    <h2>Software de auditoría</h2>
+                    <p class="lede">Plataforma para despachos.</p>
+                    <p class="desc">
+                        Una sola fuente de verdad para el trabajo del auditor. Adiós a Excel,
+                        emails sueltos y carpetas compartidas perdidas.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Postgres</span>
                     </div>
+                    <a class="link">Próximamente</a>
                 </div>
-            </div>
-            <div class="row gy-5 gx-4">
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="150">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-1.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="250">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-2.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="350">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-3.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="450">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-4.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="550">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-5.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6" data-aos="fade-down" data-aos-delay="650">
-                    <div class="review">
-                        <div class="review-head p-4 bg-white theme-shadow">
-                            <div class="text-warning">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                            </div>
-                            <p>Amazing theme ipsum dolor sit amet consectetur adipisicing elit. Assumenda eum animi rerum ipsam impedit dicta voluptatem.</p>
-                        </div>
-                        <div class="review-person mt-4 d-flex align-items-center">
-                            <img class="rounded-circle" src="./assets/images/avatar-6.jpg" alt="">
-                            <div class="ms-3">
-                                <h5>Dianne Russell</h5>
-                                <small>UX Architect</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
-    <!-- CONTACT -->
-    <section class="section-padding bg-light" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 text-white fw-semibold">¿Listo para Encontrar Tu Talento?</h1>
-                        <div class="line bg-white"></div>
-                        <p class="text-white">Completa el formulario abajo y hablamos sobre tus necesidades</p>
+                <div class="folder-right">
+                    <div class="audit-mock" aria-hidden="true">
+                        <div class="corner">v.0.2 — sprint 4</div>
+                        <div class="panel">
+                            <div class="row r1"></div>
+                            <div class="row r2"></div>
+                            <div class="row r3"></div>
+                            <div class="row r4"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row justify-content-center" data-aos="fade-down" data-aos-delay="250">
-                <div class="col-lg-8">
-                    <form action="https://formspree.io/f/mzzpqgvw" method="POST" class="row g-3 p-lg-5 p-4 bg-white theme-shadow">
-                        <div class="form-group col-lg-6">
-                            <input type="text" name="nombre" class="form-control" placeholder="Tu nombre" required>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <input type="text" name="empresa" class="form-control" placeholder="Nombre de la empresa" required>
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <input type="email" name="email" class="form-control" placeholder="Tu email" required>
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <select name="tipo_especialista" class="form-control" required>
-                                <option value="">Tipo de especialista que necesitas</option>
-                                <option value="dev-fullstack">Desarrollador Full-Stack</option>
-                                <option value="dev-frontend">Desarrollador Frontend</option>
-                                <option value="dev-backend">Desarrollador Backend</option>
-                                <option value="dev-mobile">Desarrollador Mobile</option>
-                                <option value="designer-ux">Diseñador UX/UI</option>
-                                <option value="data-analyst">Data Analyst</option>
-                                <option value="consultor-cloud">Consultor Cloud</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <input type="text" name="presupuesto" class="form-control" placeholder="Presupuesto anual (ej: 50k)">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <input type="text" name="plazo" class="form-control" placeholder="Plazo para empezar">
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <textarea name="message" rows="5" class="form-control" placeholder="Detalles del proyecto y requisitos específicos"></textarea>
-                        </div>
-                        <div class="form-group col-lg-12 d-grid">
-                            <button type="submit" class="btn btn-brand">Enviar Solicitud</button>
-                        </div>
-                        <div class="form-group col-lg-12 text-center mt-3">
-                            <p class="mb-2 small text-muted">O agenda una reunión directamente:</p>
-                            <a href="#" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#calendlyModal">
-                                <i class="ri-calendar-line"></i> Agendar Videollamada
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+            </article>
 
-    <!-- BLOG -->
-    <!-- <section id="blog" class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center" data-aos="fade-down" data-aos-delay="150">
-                    <div class="section-title">
-                        <h1 class="display-4 fw-semibold">Recent News & Articles</h1>
-                        <div class="line"></div>
-                        <p>We love to craft digital experiances for brands rather than crap and more lorem ipsums and do crazy skills</p>
-                    </div>
+            <!-- Folder 03 — Agendamiento -->
+            <article class="folder f03" data-card="03">
+                <div class="folder-tab"><span class="tab-dot" aria-hidden="true"></span> 03 · Agendamiento</div>
+                <div class="folder-meta">
+                    <span class="label-l">Producto 03 / 04</span>
+                    <span class="status-pill"><span class="dot" aria-hidden="true"></span>En estudio</span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="150">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/blog-post-1.jpg" alt="">
-                        </div>
-                        <h5 class="mt-4">Web Design 2022</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sequi quos magni!</p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="250">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/blog-post-2.jpg" alt="">
-                        </div>
-                        <h5 class="mt-4">Web Design 2022</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sequi quos magni!</p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-                <div class="col-md-4" data-aos="fade-down" data-aos-delay="350">
-                    <div class="team-member image-zoom">
-                        <div class="image-zoom-wrapper">
-                            <img src="./assets/images/blog-post-3.jpg" alt="">
-                        </div>
-                        <h5 class="mt-4">Web Design 2022</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sequi quos magni!</p>
-                        <a href="#">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
+                <div class="folder-divider" aria-hidden="true"></div>
 
-    <!-- FOOTER -->
-    <footer class="bg-dark">
-        <div class="footer-top">
-            <div class="container justify-content-center">
-                <div class="row gy-4">
-                    <div class="col-lg-4 col-sm-6 columna">
-                        <a class="navbar-brand footer-logo-text mb-3 d-block" href="#">
-                            IBEROHUB.
+                <div class="folder-left">
+                    <h2>SaaS de agendamiento</h2>
+                    <p class="lede">Reservas para pequeños comercios.</p>
+                    <p class="desc">
+                        Sin reinventar la rueda. Solo bien hecho, rápido, y con respeto por quien lo usa.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Next.js</span>
+                        <span class="tag">Stripe</span>
+                    </div>
+                    <a class="link">Próximamente</a>
+                </div>
+
+                <div class="folder-right">
+                    <div class="cal-mock" aria-hidden="true">
+                        <div class="grid">
+                            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                            <div class="cell"></div><div class="cell filled"></div><div class="cell"></div>
+                            <div class="cell"></div><div class="cell filled"></div><div class="cell"></div>
+                            <div class="cell"></div><div class="cell"></div><div class="cell filled"></div>
+                            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                            <div class="cell filled"></div><div class="cell"></div><div class="cell filled"></div>
+                            <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+                            <div class="cell"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Folder 04 — Tú (gancho con aurora scroll-driven) -->
+            <article class="folder f04" data-card="04">
+                <div class="folder-tab"><span class="tab-dot" aria-hidden="true"></span> 04 · Tú</div>
+                <div class="folder-meta">
+                    <span class="label-l hook-label">Producto 04 / 04</span>
+                    <span class="status-pill"><span class="dot" aria-hidden="true"></span>Reservado para ti</span>
+                </div>
+                <div class="folder-divider" aria-hidden="true"></div>
+
+                <div class="folder-left">
+                    <h2>Plaza disponible para tu próximo producto.</h2>
+                    <p class="lede mint">El siguiente caso del estudio.</p>
+                    <p class="desc">
+                        Tienes una idea, un MVP a medio camino, o un producto que necesita evolucionar.
+                        Cuéntanos. Iberohub puede ser tu partner técnico para construir, lanzar o escalar.
+                    </p>
+                    <div class="hook-ctas">
+                        <a href="mailto:hola@iberohub.com?subject=Cuenta%20tu%20idea" class="btn hook-primary">
+                            Cuéntanos tu idea <span class="arrow">→</span>
                         </a>
-                        <div class="line mb-2"></div>
-                        <p>Talento tech en 7 días o tu dinero de vuelta.</p>
-                        <div class="social-icons d-flex gap-2 mt-3">
-                            <a href="#"><i class="ri-linkedin-fill"></i></a>
-                            <a href="#"><i class="ri-instagram-fill"></i></a>
-                            <!-- <a href="https://wa.me/34657340341"><i class="ri-whatsapp-fill"></i></a> -->
+                        <a href="#contacto" class="btn hook-secondary">Reservar 20 min</a>
+                    </div>
+                </div>
+
+                <div class="folder-right">
+                    <div class="hook-card" aria-hidden="true">
+                        <div class="filename">
+                            <span id="hook-filename">tu_idea.txt</span>
+                        </div>
+                        <div class="scribble">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <span class="cursor"></span>
+                        </div>
+                        <div class="meta-row">
+                            <span>archivo abierto</span>
+                            <span>est. iberohub · madrid</span>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-3 columna">
-                        <h5 class="mb-0 text-white">NAVEGACIÓN</h5>
-                        <div class="line"></div>
-                        <ul>
-                            <li><a href="#hero">Inicio</a></li>
-                            <li><a href="#about">Nosotros</a></li>
-                            <li><a href="#como-funciona">Cómo Funciona</a></li>
-                            <li><a href="#contact">Contacto</a></li>
-                            <li><a href="vacantes.html">Vacantes</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 columna">
-                        <h5 class="mb-0 text-white">CONTACTO</h5>
-                        <div class="line"></div>
-                        <ul>
-                            <li>Madrid, España</li>
-                            <!-- <li><a href="https://wa.me/34657340341">+34 657 340 341</a></li> -->
-                            <li><a href="mailto:contacto@iberohub.com">contacto@iberohub.com</a></li>
-                        </ul>
-                    </div>
+                </div>
+
+                <div class="hook-counter" aria-hidden="true">N° 04 / TÚ</div>
+            </article>
+
+            <div class="stack-release" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <!-- ====================== TESIS ====================== -->
+    <section class="tesis" id="tesis" aria-labelledby="tesis-label">
+        <p class="tesis-label" id="tesis-label">
+            <span class="tesis-dash" aria-hidden="true"></span>
+            La tesis
+        </p>
+        <div class="tesis-grid">
+            <div class="tesis-col" data-num="01">
+                <p>Creemos que el mejor software se construye con tiempo, no con prisa de inversor. Que la integridad técnica supera al hype.</p>
+            </div>
+            <div class="tesis-col" data-num="02">
+                <p>Que un fundador con un producto que funciona dice más que diez slides de pitch deck.</p>
+            </div>
+            <div class="tesis-col" data-num="03">
+                <p>No buscamos crecer rápido. Buscamos construir bien.</p>
+            </div>
+            <div class="tesis-col" data-num="04">
+                <p>No somos una agencia. Somos un estudio de productos. Este es nuestro enfoque.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== SIGNAL — semáforo ====================== -->
+    <section class="signal-section" id="contacto" aria-label="Cómo trabajamos">
+        <div class="signal-caption">
+            <span>Cómo trabajamos · Ciclo en directo</span>
+            <span class="state" id="signal-state">
+                <span class="dot" aria-hidden="true"></span>
+                <span class="state-label">Fase · Hablamos</span>
+            </span>
+        </div>
+
+        <div class="signal-rail">
+            <div class="signal-track" id="signal-track">
+                <div class="signal-word red is-active" data-phase="0">
+                    <span class="num">01</span>
+                    <span class="signal-light" aria-hidden="true">
+                        <span class="bulb r"></span><span class="bulb a"></span><span class="bulb g"></span>
+                    </span>
+                    <span class="text">Hablamos</span>
+                </div>
+                <div class="signal-word amber" data-phase="1">
+                    <span class="num">02</span>
+                    <span class="signal-light" aria-hidden="true">
+                        <span class="bulb r"></span><span class="bulb a"></span><span class="bulb g"></span>
+                    </span>
+                    <span class="text">Construimos</span>
+                </div>
+                <div class="signal-word green" data-phase="2">
+                    <span class="num">03</span>
+                    <span class="signal-light" aria-hidden="true">
+                        <span class="bulb r"></span><span class="bulb a"></span><span class="bulb g"></span>
+                    </span>
+                    <span class="text">Lanzamos</span>
                 </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row g-4 justify-content-between">
-                    <div class="col-auto">
-                        <p class="mb-0">© Copyright Iberohub. Todos los Derechos Reservados</p>
-                    </div>
-                    <div class="col-auto">
-                        <p class="mb-0">Desarrollado por el equipo de Iberohub</p>
-                    </div>
-                </div>
+
+        <div class="signal-caption">
+            <span>HBLM → CNSTR → LNZM</span>
+            <span>Loop · 5.2s</span>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer>
+        <div class="foot">
+            <div class="foot-col foot-brand">
+                <div class="logo">Iberohub<span class="dot" aria-hidden="true"></span></div>
+                <div class="email"><a href="mailto:hola@iberohub.com">hola@iberohub.com</a></div>
+                <div class="loc">Madrid, España</div>
             </div>
+            <div class="foot-col">
+                <h4>Productos</h4>
+                <ul>
+                    <li><a href="https://iberofinance.com" target="_blank" rel="noopener">Iberofinance</a></li>
+                    <li><a href="#productos">Auditoría</a></li>
+                    <li><a href="#productos">Agendamiento</a></li>
+                </ul>
+            </div>
+            <div class="foot-col" id="estudio">
+                <h4>Estudio</h4>
+                <ul>
+                    <li><a href="#tesis">Tesis</a></li>
+                    <li><a href="#estudio">Fundador</a></li>
+                </ul>
+            </div>
+            <div class="foot-col">
+                <h4>Sigue</h4>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/santiagomonzo/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/SantiagoPeres" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot-end">
+            <span>© 2026 IBEROHUB · El futuro del software es hoy.</span>
+            <span class="quote">Construir es la única forma honesta de hablar.</span>
         </div>
     </footer>
 
-    <!-- MODAL DE CONTACTO RÁPIDO -->
-    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold" id="contactModalLabel">¿Cómo Prefieres Contactar?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <p class="text-muted mb-4">Elige la opción que mejor se adapte a ti:</p>
-                    
-                    <!-- Opción 1: Agendar Videollamada -->
-                    <div class="contact-option p-4 mb-3 border rounded" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#calendlyModal" data-bs-dismiss="modal">
-                        <div class="d-flex align-items-center">
-                            <div class="iconbox me-3" style="background: rgba(83, 0, 130, 0.1);">
-                                <i class="ri-calendar-line" style="color: #530082;"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="mb-1 fw-bold">Agendar Videollamada</h6>
-                                <small class="text-muted">Reserva 30 minutos para hablar sobre tu proyecto</small>
-                            </div>
-                            <div>
-                                <a href="https://calendly.com/meusantodrive/consulta-de-talento-tech" 
-                                   target="_blank" 
-                                   class="btn btn-sm btn-outline-primary"
-                                   onclick="event.stopPropagation()">
-                                    <i class="ri-external-link-line"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Opción 2: Enviar Email -->
-                    <div class="contact-option p-4 mb-3 border rounded" style="cursor: pointer;" onclick="window.location.href='mailto:contacto@iberohub.com?subject=Solicitud de Talento Tech&body=Hola Santiago,%0D%0A%0D%0ANecesito talento tech para mi empresa.%0D%0A%0D%0ATipo de especialista:%0D%0APresupuesto:%0D%0APlazo:%0D%0A%0D%0ASaludos'">
-                        <div class="d-flex align-items-center">
-                            <div class="iconbox me-3" style="background: rgba(83, 0, 130, 0.1);">
-                                <i class="ri-mail-line" style="color: #530082;"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1 fw-bold">Enviar Email</h6>
-                                <small class="text-muted">contacto@iberohub.com</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Opción 3: Llenar Formulario -->
-                    <div class="contact-option p-4 border rounded" style="cursor: pointer;" data-bs-dismiss="modal" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-                        <div class="d-flex align-items-center">
-                            <div class="iconbox me-3" style="background: rgba(83, 0, 130, 0.1);">
-                                <i class="ri-file-text-line" style="color: #530082;"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-1 fw-bold">Llenar Formulario</h6>
-                                <small class="text-muted">Completa el formulario detallado abajo</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CALENDLY -->
-    <div class="modal fade" id="calendlyModal" tabindex="-1" aria-labelledby="calendlyModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold" id="calendlyModalLabel">Agenda Tu Reunión</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <!-- CALENDLY WIDGET INTEGRADO -->
-                    <div class="calendly-inline-widget" 
-                         data-url="https://calendly.com/meusantodrive/consulta-de-talento-tech" 
-                         style="min-width:320px;height:700px;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="./assets/js/main.js"></script>
-    <!-- Calendly Widget Script -->
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <script>UPLOADCARE_PUBLIC_KEY = "091573fb52e608168d0d";</script>
-    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.lang.es.min.js"></script>
-    
-    <!-- Toggle Empresas/Profesionales Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleButtons = document.querySelectorAll('.toggle-btn, .toggle-btn-mobile');
-            
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const audience = this.getAttribute('data-audience');
-                    
-                    // Actualizar botones activos
-                    document.querySelectorAll('.toggle-btn, .toggle-btn-mobile').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    document.querySelectorAll(`[data-audience="${audience}"]`).forEach(btn => {
-                        btn.classList.add('active');
-                    });
-                    
-                    // Mostrar/ocultar contenido
-                    if (audience === 'empresas') {
-                        // Hero
-                        document.querySelector('.hero-empresas').style.display = 'block';
-                        document.querySelector('.hero-profesionales').style.display = 'none';
-                        
-                        // Como Funciona
-                        document.querySelector('.content-empresas').style.display = 'block';
-                        document.querySelector('.content-profesionales').style.display = 'none';
-                        
-                        // CTAs
-                        document.querySelector('.cta-empresas').style.display = 'inline-block';
-                        document.querySelector('.cta-profesionales').style.display = 'none';
-                    } else {
-                        // Hero
-                        document.querySelector('.hero-empresas').style.display = 'none';
-                        document.querySelector('.hero-profesionales').style.display = 'block';
-                        
-                        // Como Funciona
-                        document.querySelector('.content-empresas').style.display = 'none';
-                        document.querySelector('.content-profesionales').style.display = 'block';
-                        
-                        // CTAs
-                        document.querySelector('.cta-empresas').style.display = 'none';
-                        document.querySelector('.cta-profesionales').style.display = 'inline-block';
-                    }
-                    
-                    // Scroll suave al inicio
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-            });
-        });
-    </script>
-
-      
 </body>
 </html>

@@ -1,62 +1,339 @@
+/* ============================================================
+   IBEROHUB · main.js
+   Port vanilla del design handoff (hero.jsx + folders.jsx + signal.jsx).
+   ============================================================ */
 
-AOS.init({
-  // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-  offset: 120, // offset (in px) from the original trigger point
-  delay: 0, // values from 0 to 3000, with step 50ms
-  duration: 900, // values from 0 to 3000, with step 50ms
-  easing: 'ease', // default easing for AOS animations
-  once: false, // whether animation should happen only once - while scrolling down
-  mirror: false, // whether elements should animate out while scrolling past them
-  anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+(() => {
+    'use strict';
 
-});
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Função de callback para o Intersection Observer
-function handleIntersection(entries, observer) {
-  entries.forEach(entry => {
-      if (entry.isIntersecting) {
-          // Adiciona a classe 'visible' quando o elemento está visível
-          entry.target.classList.add('visible');
-          // Para de observar o mesmo elemento
-          observer.unobserve(entry.target);
-      }
-  });
-}
+    /* ---------- HERO: mark letters + SVG lines + cursor glow + parallax + "siguiente" rotator ---------- */
+    const initHero = () => {
+        // 1) Generar las letras de IBEROHUB con spans individuales
+        const mark = document.getElementById('iberohub-mark');
+        if (mark && !mark.dataset.built) {
+            mark.dataset.built = '1';
+            const text = mark.dataset.letters || 'IBEROHUB';
+            mark.textContent = '';
+            text.split('').forEach((ch, i) => {
+                const span = document.createElement('span');
+                span.className = 'letter';
+                span.textContent = ch;
+                span.style.transitionDelay = `${i * 30}ms`;
+                mark.appendChild(span);
+            });
+        }
 
-// Cria uma instância do Intersection Observer
-const observer = new IntersectionObserver(handleIntersection, {
-  threshold: 0.1 // Quando 10% do elemento está visível
-});
+        // 2) Generar 14 paths sinusoidales en el background hero
+        const linesGroup = document.getElementById('hero-lines');
+        if (linesGroup && !linesGroup.dataset.built) {
+            linesGroup.dataset.built = '1';
+            const SVG_NS = 'http://www.w3.org/2000/svg';
+            for (let i = 0; i < 14; i++) {
+                const path = document.createElementNS(SVG_NS, 'path');
+                path.setAttribute('d',
+                    `M ${-100 + i * 30} 1080 Q ${600 + i * 40} ${300 - i * 10}, ${2000 + i * 40} ${-100 + i * 20}`
+                );
+                linesGroup.appendChild(path);
+            }
+        }
 
-// Seleciona todos os elementos que desejamos animar
-const elements = document.querySelectorAll('[data-aos]');
+        // 3) Cursor glow + per-letter parallax
+        const hero = document.querySelector('.hero');
+        const glow = document.querySelector('.hero-cursor-glow');
+        const letters = mark ? Array.from(mark.querySelectorAll('.letter')) : [];
 
-// Observa cada elemento
-elements.forEach(element => {
-  // Adiciona classes de animação baseadas no atributo data-aos
-  const animationClass = element.getAttribute('data-aos');
-  element.classList.add(animationClass);
-  observer.observe(element);
-});
+        if (hero && !prefersReducedMotion) {
+            const onMove = (e) => {
+                const r = hero.getBoundingClientRect();
+                if (e.clientY < r.top || e.clientY > r.bottom) return;
+                const x = e.clientX;
+                const y = e.clientY;
+                if (glow) {
+                    glow.style.left = x + 'px';
+                    glow.style.top = y + 'px';
+                }
+                const cx = r.left + r.width / 2;
+                const cy = r.top + r.height / 2;
+                const dx = (x - cx) / r.width;
+                const dy = (y - cy) / r.height;
+                letters.forEach((el, i) => {
+                    const depth = ((i % 4) + 1) * 2;
+                    el.style.transform = `translate3d(${dx * depth}px, ${dy * depth}px, 0)`;
+                });
+            };
+            window.addEventListener('mousemove', onMove, { passive: true });
+        }
 
-//googleSheets
-const url = "https://spreadsheets.google.com/feeds/list/2PACX-1vSzh0xphKAtwbse_yFieh-IoTz3N4ybAWNMCb6f5s0l3aJsO0FcDWx8TBO7fv6AZFttHleSvkmJhtG9/1/public/values?alt=json";
+        // 4) Cycler de frases del subtítulo con crossfade + slide overlap (~300ms)
+        //    Visible 3200ms · transición 700ms · saliente y entrante coexisten.
+        const subEl = document.getElementById('hero-sub');
+        if (subEl) {
+            const phrases = Array.from(subEl.querySelectorAll('.sub-phrase'));
+            if (phrases.length > 1 && !prefersReducedMotion) {
+                let current = 0;
+                let running = true;
+                const VISIBLE_MS = 3200;
+                const OVERLAP_MS = 300;  // entrante empieza 300ms antes que termine la saliente
+                const TRANSITION_MS = 700;
 
-fetch(url)
-  .then((response) => response.json())
-  .then((data) => {
-    const entries = data.feed.entry;
-    let html = "";
-    entries.forEach((entry) => {
-      html += `
-        <div class="vacante">
-          <h3>${entry.gsx$título.$t}</h3>
-          <p>${entry.gsx$descripción.$t}</p>
-          <p><strong>Requisitos:</strong> ${entry.gsx$requisitos.$t}</p>
-          <p><strong>Ubicación:</strong> ${entry.gsx$ubicación.$t}</p>
-          <a href="${entry.gsx$enlace.$t}" target="_blank" class="btn btn-light">Aplicar</a>
-        </div>`;
-    });
-    document.getElementById("vacantes-list").innerHTML = html;
-  })
-  .catch((error) => console.error("Error al obtener los datos:", error));
+                const cycle = () => {
+                    if (!running) return;
+                    const next = (current + 1) % phrases.length;
+                    // Saliente: marcamos is-leaving (mantiene la frase visible mientras se desliza fuera)
+                    phrases[current].classList.remove('is-active');
+                    phrases[current].classList.add('is-leaving');
+                    // Esperar el solapamiento antes de entrar la siguiente
+                    setTimeout(() => {
+                        phrases[next].classList.add('is-active');
+                    }, OVERLAP_MS);
+                    // Limpiar la saliente cuando termine su transición
+                    setTimeout(() => {
+                        phrases[current].classList.remove('is-leaving');
+                        current = next;
+                    }, TRANSITION_MS);
+                };
+
+                let intervalId = setInterval(cycle, VISIBLE_MS);
+
+                // Pausar cuando el hero está fuera del viewport
+                const hero = document.querySelector('.hero');
+                if (hero && 'IntersectionObserver' in window) {
+                    const io = new IntersectionObserver((entries) => {
+                        entries.forEach((e) => {
+                            const visible = e.isIntersecting && e.intersectionRatio > 0.1;
+                            if (visible && !running) {
+                                running = true;
+                                intervalId = setInterval(cycle, VISIBLE_MS);
+                            } else if (!visible && running) {
+                                running = false;
+                                clearInterval(intervalId);
+                            }
+                        });
+                    }, { threshold: [0, 0.1, 0.25] });
+                    io.observe(hero);
+                }
+
+                // Pausar también con visibilitychange (pestaña inactiva)
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && running) {
+                        running = false;
+                        clearInterval(intervalId);
+                    } else if (!document.hidden && !running) {
+                        running = true;
+                        intervalId = setInterval(cycle, VISIBLE_MS);
+                    }
+                });
+            }
+        }
+    };
+
+    /* ---------- ARTILLERÍA — split de palabras del manifiesto + reveal + parallax ---------- */
+    const initArtilleria = () => {
+        const manifesto = document.getElementById('manifesto');
+        if (!manifesto) return;
+
+        // 1) Split en .word con --w-i incremental (respeta <em> como una sola word)
+        if (!manifesto.dataset.split) {
+            manifesto.dataset.split = '1';
+            let wIdx = 0;
+            const wrapToken = (token) => {
+                const span = document.createElement('span');
+                span.className = 'word';
+                span.style.setProperty('--w-i', wIdx++);
+                span.textContent = token;
+                return span;
+            };
+            manifesto.querySelectorAll('.manifesto-line').forEach((line) => {
+                const frag = document.createDocumentFragment();
+                line.childNodes.forEach((node) => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        node.textContent.split(/(\s+)/).forEach((tok) => {
+                            if (!tok) return;
+                            if (/^\s+$/.test(tok)) frag.appendChild(document.createTextNode(tok));
+                            else frag.appendChild(wrapToken(tok));
+                        });
+                    } else if (node.nodeName === 'EM') {
+                        // <em> entero como una word, manteniendo el tag
+                        const span = document.createElement('span');
+                        span.className = 'word';
+                        span.style.setProperty('--w-i', wIdx++);
+                        span.appendChild(node.cloneNode(true));
+                        frag.appendChild(span);
+                    } else {
+                        frag.appendChild(node.cloneNode(true));
+                    }
+                });
+                line.innerHTML = '';
+                line.appendChild(frag);
+            });
+        }
+
+        // 2) Reveal una sola vez al entrar viewport (IntersectionObserver)
+        if (prefersReducedMotion) {
+            manifesto.classList.add('is-visible');
+        } else if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting) {
+                        manifesto.classList.add('is-visible');
+                        io.disconnect();
+                    }
+                });
+            }, { threshold: 0.25 });
+            io.observe(manifesto);
+        } else {
+            manifesto.classList.add('is-visible');
+        }
+
+        // 3) Parallax sutil ±3px en X según mouse — solo desktop, sin reduced-motion
+        const section = manifesto.closest('.artilleria');
+        const isDesktop = window.matchMedia('(min-width: 900px)').matches;
+        if (!prefersReducedMotion && isDesktop && section) {
+            let raf = 0;
+            let targetX = 0;
+            const apply = () => {
+                raf = 0;
+                manifesto.querySelectorAll('.word').forEach((w, i) => {
+                    const depth = ((i % 3) + 1) * 1;  // 1, 2, 3 px max
+                    w.style.setProperty('--px', `${(targetX * depth).toFixed(2)}px`);
+                });
+            };
+            section.addEventListener('mousemove', (e) => {
+                const r = section.getBoundingClientRect();
+                const cx = r.left + r.width / 2;
+                targetX = ((e.clientX - cx) / (r.width / 2)) * 3;  // ±3px
+                if (!raf) raf = requestAnimationFrame(apply);
+            }, { passive: true });
+            section.addEventListener('mouseleave', () => {
+                targetX = 0;
+                if (!raf) raf = requestAnimationFrame(apply);
+            });
+        }
+    };
+
+    /* ---------- STACK: scroll progress → CSS var --hook-glow ---------- */
+    const initStack = () => {
+        const section = document.querySelector('.stack-section');
+        if (!section) return;
+
+        let raf = 0;
+        const update = () => {
+            raf = 0;
+            const rect = section.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const total = rect.height - vh;
+            // 0 cuando la sección entra; 1 cuando casi termina
+            const scrolled = Math.min(Math.max(-rect.top / total, 0), 1);
+            // glow crece en el último 55% del stack
+            const glow = Math.max(0, Math.min(1, (scrolled - 0.45) / 0.45));
+            section.style.setProperty('--hook-glow', glow.toFixed(3));
+        };
+        const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+
+        update();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+    };
+
+    /* ---------- SIGNAL (traffic light) ---------- */
+    const initSignal = () => {
+        const track = document.getElementById('signal-track');
+        const stateEl = document.getElementById('signal-state');
+        if (!track || !stateEl) return;
+
+        const words = Array.from(track.querySelectorAll('.signal-word'));
+        const stateLabel = stateEl.querySelector('.state-label');
+        const labels = ['Fase · Hablamos', 'Fase · Construimos', 'Fase · Lanzamos', 'Reiniciando ciclo'];
+        const classes = ['red', 'amber', 'green', ''];
+        const durations = [1400, 900, 1700, 800];
+
+        let phase = 0;
+        let timeoutId = null;
+
+        const applyPhase = () => {
+            words.forEach((w, i) => w.classList.toggle('is-active', i === phase));
+            stateEl.classList.remove('red', 'amber', 'green');
+            if (classes[phase]) stateEl.classList.add(classes[phase]);
+            if (stateLabel) stateLabel.textContent = labels[phase];
+
+            if (phase === 3) {
+                // slide-out a la derecha
+                track.style.transition = 'transform .9s cubic-bezier(.6,0,.2,1), opacity .35s ease .25s';
+                track.style.transform = 'translateX(110vw)';
+                track.style.opacity = '0';
+            } else if (phase === 0) {
+                // snap a la izquierda y deslizar de vuelta
+                track.style.transition = 'none';
+                track.style.transform = 'translateX(-30vw)';
+                track.style.opacity = '0';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        track.style.transition = 'transform .8s cubic-bezier(.2,.7,.2,1), opacity .6s ease';
+                        track.style.transform = 'translateX(0)';
+                        track.style.opacity = '1';
+                    });
+                });
+            } else {
+                track.style.transition = 'none';
+                track.style.transform = 'translateX(0)';
+                track.style.opacity = '1';
+            }
+        };
+
+        const tick = () => {
+            applyPhase();
+            timeoutId = setTimeout(() => {
+                phase = (phase + 1) % 4;
+                tick();
+            }, durations[phase]);
+        };
+
+        if (prefersReducedMotion) {
+            // Mostrar las 3 palabras encendidas estáticas (verde como estado final)
+            words.forEach((w) => w.classList.add('is-active'));
+            if (stateLabel) stateLabel.textContent = labels[2];
+            stateEl.classList.add('green');
+            return;
+        }
+
+        tick();
+
+        // Pausar cuando la pestaña no está activa
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (timeoutId) { clearTimeout(timeoutId); timeoutId = null; }
+            } else if (!timeoutId) {
+                tick();
+            }
+        });
+    };
+
+    /* ---------- HOOK filename rotator ---------- */
+    const initHookFilename = () => {
+        const el = document.getElementById('hook-filename');
+        if (!el || prefersReducedMotion) return;
+        const names = ['tu_idea.txt', 'mvp_inacabado.fig', 'producto_que_escala.md', 'tu_proyecto.brief'];
+        let i = 0;
+        setInterval(() => {
+            i = (i + 1) % names.length;
+            el.textContent = names[i];
+        }, 3200);
+    };
+
+    /* ---------- Boot ---------- */
+    const start = () => {
+        initHero();
+        initArtilleria();
+        initStack();
+        initSignal();
+        initHookFilename();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
