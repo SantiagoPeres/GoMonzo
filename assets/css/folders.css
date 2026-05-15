@@ -1,0 +1,214 @@
+/* ============================================================
+   IBEROHUB · Stack folders — refresh 3D (clip-path + transforms)
+   Scope: .stack-section únicamente. Cargado después de style.css.
+
+   Tokens cromáticos heredados de :root (style.css). Aquí solo
+   reescribimos las fuentes para fijarlas a ClashDisplay dentro
+   de la sección (sin tocar el resto del sitio) y añadimos la
+   capa 3D que actúa SOLO en folders f01-f03.
+   f04 mantiene su tratamiento especial (border-radius + dashed
+   + ::before aura scroll-driven con --hook-glow) definido en
+   style.css.
+   ============================================================ */
+
+.stack-section {
+    /* Lock tipográfico de la sección — sustituye Anton/Familjen/Instrument por ClashDisplay.
+       --font-mono se hereda de :root y se queda como JetBrains Mono. */
+    --font-display: "ClashDisplay", "Helvetica Neue", sans-serif;
+    --font-body: "ClashDisplay", "Helvetica Neue", sans-serif;
+    --font-italic: "ClashDisplay", "Helvetica Neue", sans-serif;
+}
+
+/* perspective container para el efecto 3D */
+.stack-section .stack-wrap {
+    perspective: 2200px;
+    perspective-origin: 50% 30%;
+    /* Pestaña de fichero — rectángulo con lados verticales y esquinas
+       superiores redondeadas (radio = --tab-r). Más baja y más ancha
+       que un chaflán para parecer un fichero de oficina real. */
+    --tab-h: 44px;
+    --tab-w: 24%;
+    --tab-r: 16px;
+}
+
+/* ------------------------------------------------------------
+   Folders 01-03 — silueta de fichero + transform 3D scroll-driven.
+   f04 NO entra aquí: mantiene su rectángulo + aurora mint.
+   ------------------------------------------------------------ */
+.stack-section .folder.f01,
+.stack-section .folder.f02,
+.stack-section .folder.f03 {
+    /* anular el chrome rectangular que les pone style.css */
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+
+    transform-origin: center top;
+    transform:
+        perspective(2200px)
+        translate3d(0, calc(var(--f-lift, 0px) * -1), var(--f-tz, 0px))
+        rotateX(var(--f-tilt, 0deg))
+        scale(var(--f-scale, 1));
+    transition: filter 0.3s ease;
+
+    /* Silueta de fichero real: cuerpo + pestaña RECTANGULAR con esquinas
+       superiores redondeadas. Lados verticales (no chaflán). Las esquinas
+       se aproximan con 5 puntos cada una para un cuarto de círculo suave.
+       Los multiplicadores 0.049, 0.191, 0.412, 0.691 corresponden a
+       1 - cos(t) en t = 18°, 36°, 54°, 72° (5 segmentos = 90°). */
+    clip-path: polygon(
+        /* extremo izquierdo del cuerpo al nivel base de la pestaña */
+        0% var(--tab-h),
+        /* base izquierda de la pestaña */
+        var(--tab-l) var(--tab-h),
+        /* pared izquierda subiendo recto hasta donde empieza la curva */
+        var(--tab-l) var(--tab-r),
+        /* esquina superior IZQUIERDA — 5 puntos aproximando cuarto de círculo */
+        calc(var(--tab-l) + var(--tab-r) * 0.049) calc(var(--tab-r) * 0.691),
+        calc(var(--tab-l) + var(--tab-r) * 0.191) calc(var(--tab-r) * 0.412),
+        calc(var(--tab-l) + var(--tab-r) * 0.412) calc(var(--tab-r) * 0.191),
+        calc(var(--tab-l) + var(--tab-r) * 0.691) calc(var(--tab-r) * 0.049),
+        calc(var(--tab-l) + var(--tab-r)) 0%,
+        /* borde plano de arriba */
+        calc(var(--tab-l) + var(--tab-w) - var(--tab-r)) 0%,
+        /* esquina superior DERECHA — espejo de la izquierda */
+        calc(var(--tab-l) + var(--tab-w) - var(--tab-r) * 0.691) calc(var(--tab-r) * 0.049),
+        calc(var(--tab-l) + var(--tab-w) - var(--tab-r) * 0.412) calc(var(--tab-r) * 0.191),
+        calc(var(--tab-l) + var(--tab-w) - var(--tab-r) * 0.191) calc(var(--tab-r) * 0.412),
+        calc(var(--tab-l) + var(--tab-w) - var(--tab-r) * 0.049) calc(var(--tab-r) * 0.691),
+        calc(var(--tab-l) + var(--tab-w)) var(--tab-r),
+        /* pared derecha bajando recto */
+        calc(var(--tab-l) + var(--tab-w)) var(--tab-h),
+        /* extremo derecho del cuerpo al nivel base de la pestaña */
+        100% var(--tab-h),
+        100% 100%,
+        0% 100%
+    );
+
+    /* sombra como drop-shadow para que siga la silueta clipeada.
+       box-shadow renderizaría el rectángulo entero. */
+    filter:
+        drop-shadow(0 calc(2px + var(--f-active, 0) * 6px) calc(6px + var(--f-active, 0) * 8px) rgba(0, 0, 0, 0.35))
+        drop-shadow(0 calc(18px + var(--f-active, 0) * 30px) calc(var(--f-shadow-blur, 60px) * 0.7) rgba(0, 0, 0, calc(var(--f-shadow-a, 0.5) * 0.85)))
+        brightness(calc(1 - var(--f-dim, 0) * 0.5))
+        saturate(calc(1 - var(--f-dim, 0) * 0.35));
+
+    /* repad para dejar sitio a la pestaña de la silueta */
+    padding-top: calc(var(--tab-h) + 36px);
+}
+
+/* will-change solo cuando la folder está activa (3D corriendo) */
+.stack-section .folder.is-3d-active {
+    will-change: transform, filter;
+}
+
+/* posición horizontal de pestaña por folder + stagger vertical sticky.
+   Con --tab-w: 24% el stagger ideal es 24% (paso = ancho de pestaña) para
+   que las 4 quepan justas sin solaparse: 2% + 24% × 3 = 74% + 24% = 98%. */
+.stack-section .folder.f01 { --tab-l: 2%;  top: 30px;  }
+.stack-section .folder.f02 { --tab-l: 26%; top: 92px;  }
+.stack-section .folder.f03 { --tab-l: 50%; top: 154px; }
+/* f04 conserva su top:180px de style.css; aquí solo le damos --tab-l por simetría
+   visual del stagger de pestañas (aunque su tab es rectangular, no afecta) */
+.stack-section .folder.f04 { --tab-l: 74%; }
+
+/* ------------------------------------------------------------
+   Tabs de f01-f03 — sit DENTRO de la pestaña recortada.
+   Anula el chrome de pill (border + radius + padding) que style.css
+   les pone, porque ahora la "pill" la dibuja el clip-path.
+   ------------------------------------------------------------ */
+.stack-section .folder.f01 .folder-tab,
+.stack-section .folder.f02 .folder-tab,
+.stack-section .folder.f03 .folder-tab {
+    top: 0;
+    left: calc(var(--tab-l) + 18px);
+    width: calc(var(--tab-w) - 36px);
+    height: var(--tab-h);
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 0;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ajustar la posición de meta/divider/hook-counter para el padding extra de la silueta */
+.stack-section .folder.f01 .folder-meta,
+.stack-section .folder.f02 .folder-meta,
+.stack-section .folder.f03 .folder-meta {
+    top: calc(var(--tab-h) + 18px);
+}
+.stack-section .folder.f01 .folder-divider,
+.stack-section .folder.f02 .folder-divider,
+.stack-section .folder.f03 .folder-divider {
+    top: calc(var(--tab-h) + 50px);
+}
+
+/* ------------------------------------------------------------
+   Responsive — bajo 900px MANTENEMOS la silueta de la pestaña
+   (preserva la identidad visual de "fichero") y la sombra que
+   sigue su contorno. Solo desactivamos el efecto 3D real
+   (tilt/scale/translateZ) — el JS deja de escribir esas vars
+   bajo el breakpoint.
+   ------------------------------------------------------------ */
+@media (max-width: 900px) {
+    .stack-section .stack-wrap {
+        /* pestaña proporcionalmente más pequeña en mobile, pero
+           manteniendo lados verticales + esquinas redondeadas */
+        --tab-h: 32px;
+        --tab-w: 28%;
+        --tab-r: 12px;
+    }
+
+    .stack-section .folder.f01,
+    .stack-section .folder.f02,
+    .stack-section .folder.f03 {
+        /* anular transform 3D, mantener clip-path + filter (sombra estática) */
+        transform: none;
+        /* padding-top alto para que el título quede por debajo del divider con aire.
+           Desktop usa min-height: 88vh + align-items: center y el centrado hace ese
+           gap; en mobile (min-height: auto) hay que reservar el espacio explícito. */
+        padding-top: calc(var(--tab-h) + 70px);
+    }
+
+    /* re-stagger horizontal mobile — step ≈ ancho de pestaña (23%) para
+       que las 4 quepan sin overlap: 2% + 23% × 3 = 71% + 28% = 99%. */
+    .stack-section .folder.f01 { --tab-l: 2%;  }
+    .stack-section .folder.f02 { --tab-l: 25%; }
+    .stack-section .folder.f03 { --tab-l: 48%; }
+    .stack-section .folder.f04 { --tab-l: 71%; }
+
+    /* tab label se mantiene dentro de la silueta — ajustamos offsets internos */
+    .stack-section .folder.f01 .folder-tab,
+    .stack-section .folder.f02 .folder-tab,
+    .stack-section .folder.f03 .folder-tab {
+        left: calc(var(--tab-l) + 10px);
+        width: calc(var(--tab-w) - 20px);
+        font-size: 9px;
+        letter-spacing: 0.18em;
+    }
+    .stack-section .folder.f01 .folder-meta,
+    .stack-section .folder.f02 .folder-meta,
+    .stack-section .folder.f03 .folder-meta {
+        top: calc(var(--tab-h) + 10px);
+    }
+    .stack-section .folder.f01 .folder-divider,
+    .stack-section .folder.f02 .folder-divider,
+    .stack-section .folder.f03 .folder-divider {
+        top: calc(var(--tab-h) + 38px);
+    }
+}
+
+/* ------------------------------------------------------------
+   Reduced-motion — sin transforms ni filtros animados.
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+    .stack-section .folder.f01,
+    .stack-section .folder.f02,
+    .stack-section .folder.f03 {
+        transform: none !important;
+        filter: none !important;
+    }
+}

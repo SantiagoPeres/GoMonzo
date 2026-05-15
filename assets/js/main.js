@@ -213,28 +213,113 @@
         }
     };
 
-    /* ---------- STACK: scroll progress → CSS var --hook-glow ---------- */
+    /* ---------- STACK: scroll progress + per-folder 3D ----------
+       Dos cosas en el mismo rAF:
+       (1) --hook-glow en la sección (igual que antes; alimenta el aura del card 04 — no tocar).
+       (2) f01-f03: 6 CSS vars (--f-tilt/-scale/-tz/-lift/-dim/-active + 2 de sombra).
+           f04 queda fuera: mantiene su tratamiento especial.
+       Desactivado bajo 900px y con reduced-motion.
+    */
     const initStack = () => {
         const section = document.querySelector('.stack-section');
         if (!section) return;
 
+        const folders = Array.from(section.querySelectorAll('.folder'));
+        const folders3D = folders.filter((f) => !f.classList.contains('f04'));
+        const mq = window.matchMedia('(min-width: 900px)');
+
+        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+        const ACTIVE_THRESHOLD = 0.05;
+
+        // sticky-top cacheado por folder; se recomputa en resize por si los breakpoints cambian.
+        let stickyTops = [];
+        const recomputeStickyTops = () => {
+            stickyTops = folders.map((f) => parseFloat(getComputedStyle(f).top) || 0);
+        };
+        recomputeStickyTops();
+
+        const clearFolderVars = (f) => {
+            f.style.removeProperty('--f-tilt');
+            f.style.removeProperty('--f-scale');
+            f.style.removeProperty('--f-tz');
+            f.style.removeProperty('--f-lift');
+            f.style.removeProperty('--f-dim');
+            f.style.removeProperty('--f-active');
+            f.style.removeProperty('--f-shadow-a');
+            f.style.removeProperty('--f-shadow-blur');
+            f.classList.remove('is-3d-active');
+        };
+
         let raf = 0;
         const update = () => {
             raf = 0;
-            const rect = section.getBoundingClientRect();
             const vh = window.innerHeight;
-            const total = rect.height - vh;
-            // 0 cuando la sección entra; 1 cuando casi termina
-            const scrolled = Math.min(Math.max(-rect.top / total, 0), 1);
-            // glow crece en el último 55% del stack
+
+            // READ phase — batched, sin writes en medio (evita layout thrashing).
+            const sectionRect = section.getBoundingClientRect();
+            const folderRects = folders.map((f) => f.getBoundingClientRect());
+
+            // --hook-glow (siempre, incluido mobile/reduced-motion porque
+            // alimenta el aura del card 04 que SÍ tiene que seguir funcionando).
+            const total = Math.max(sectionRect.height - vh, 1);
+            const scrolled = Math.min(Math.max(-sectionRect.top / total, 0), 1);
             const glow = Math.max(0, Math.min(1, (scrolled - 0.45) / 0.45));
             section.style.setProperty('--hook-glow', glow.toFixed(3));
+
+            // 3D per-folder — solo desktop, no reduced-motion.
+            if (prefersReducedMotion || !mq.matches) {
+                folders3D.forEach(clearFolderVars);
+                return;
+            }
+
+            folders3D.forEach((f) => {
+                const i = folders.indexOf(f);
+                const me = folderRects[i];
+                const next = folderRects[i + 1]; // siguiente folder (puede ser f04)
+                const stickyTop = stickyTops[i];
+
+                let coverage = 0;
+                if (next) {
+                    const gap = next.top - me.top;
+                    // Empieza a inclinarse cuando el siguiente está a <1vh; completa a 0.25vh.
+                    coverage = 1 - Math.min(Math.max((gap - vh * 0.25) / (vh * 0.75), 0), 1);
+                }
+                const settle = Math.min(Math.max(1 - (me.top - stickyTop) / (vh * 0.5), 0), 1);
+                const active = settle * (1 - coverage * 0.85);
+
+                const tilt = easeOutCubic(coverage) * 7;
+                const scale = 1 - easeOutCubic(coverage) * 0.06;
+                const tz = -easeOutCubic(coverage) * 80;
+                const dim = easeOutCubic(coverage) * 0.35;
+                const lift = active * 14;
+                const shadowA = 0.45 + active * 0.35;
+                const shadowBlur = 50 + active * 60;
+
+                f.style.setProperty('--f-tilt',   tilt.toFixed(2) + 'deg');
+                f.style.setProperty('--f-scale',  scale.toFixed(3));
+                f.style.setProperty('--f-tz',     tz.toFixed(1) + 'px');
+                f.style.setProperty('--f-lift',   lift.toFixed(2) + 'px');
+                f.style.setProperty('--f-dim',    dim.toFixed(3));
+                f.style.setProperty('--f-active', active.toFixed(3));
+                f.style.setProperty('--f-shadow-a',    shadowA.toFixed(3));
+                f.style.setProperty('--f-shadow-blur', shadowBlur.toFixed(0) + 'px');
+
+                // will-change solo cuando está activa (>5%) — evita la reserva permanente.
+                f.classList.toggle('is-3d-active', active > ACTIVE_THRESHOLD);
+            });
         };
+
         const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+        const onResize = () => {
+            recomputeStickyTops();
+            // si pasamos de desktop→mobile, limpiar vars residuales.
+            if (!mq.matches) folders3D.forEach(clearFolderVars);
+            onScroll();
+        };
 
         update();
         window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
+        window.addEventListener('resize', onResize);
     };
 
     /* ---------- SIGNAL (traffic light) ---------- */
