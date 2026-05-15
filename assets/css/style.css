@@ -980,64 +980,176 @@ img, svg { max-width: 100%; height: auto; display: block; }
 }
 
 /* ============================================================
-   TESIS — entre stack y signal
+   EL FUNDADOR — manifiesto + tarjeta (entre stack y signal)
    ============================================================ */
-.tesis {
+.fundador {
     position: relative;
-    background: var(--bg);
-    padding: clamp(80px, 12vh, 140px) 40px clamp(60px, 8vh, 100px);
+    background: var(--bg-2);
+    padding: clamp(80px, 12vh, 120px) 40px clamp(80px, 10vh, 120px);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
 }
 
-.tesis-label {
+.fundador-eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--ink-mute);
-    margin: 0 0 56px;
-    display: flex; align-items: center; gap: 14px;
+    color: var(--mint);
+    margin: 0 0 28px;
+    display: flex; align-items: center; gap: 10px;
 }
-.tesis-dash {
-    display: inline-block;
-    width: 40px; height: 1px;
-    background: var(--ink-mute);
+.fundador-eyebrow .dot {
+    width: 7px; height: 7px;
+    background: var(--mint);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-dim, rgba(93,217,164,0.4));
 }
 
-.tesis-grid {
+.fundador-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 5vw, 88px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-weight: 400;
+    margin: 0 0 64px;
+}
+
+.fundador-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(2rem, 4vw, 4rem);
+    grid-template-columns: 1.6fr 1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
 }
 
-.tesis-col {
-    position: relative;
+/* Manifiesto */
+.fundador-manifesto {
+    display: flex; flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 56ch;
 }
-
-.tesis-col p {
+.manifesto-frase {
     font-family: var(--font-body);
-    font-size: clamp(15px, 1.05vw, 17px);
-    line-height: 1.55;
+    font-size: clamp(16px, 1.2vw, 19px);
+    line-height: 1.5;
     color: var(--ink-dim);
     margin: 0;
-    max-width: 32ch;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+        opacity 0.6s cubic-bezier(.2,.7,.2,1),
+        transform 0.6s cubic-bezier(.2,.7,.2,1);
+    transition-delay: calc(var(--i, 0) * 80ms);
+    will-change: transform, opacity;
 }
-
-.tesis-col p::first-letter {
+.manifesto-frase.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.manifesto-frase::first-letter {
     color: var(--mint);
     font-weight: 600;
+    font-size: 1.4em;
+    letter-spacing: -0.01em;
 }
 
+/* Tarjeta del fundador */
+.fundador-card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px;
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+.fundador-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(93,217,164,0.06) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.fundador-avatar {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(93,217,164,0.15), rgba(93,217,164,0.04));
+    border: 1px solid rgba(93,217,164,0.35);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+}
+.fundador-avatar span {
+    font-family: var(--font-display);
+    font-size: 38px;
+    color: var(--mint);
+    line-height: 1;
+}
+
+.fundador-name {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2vw, 32px);
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 400;
+}
+.fundador-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin: 4px 0 0;
+}
+.fundador-loc {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 22px;
+}
+
+.fundador-socials {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+}
+.fundador-socials li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+.fundador-socials a {
+    color: var(--ink-dim);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+}
+.fundador-socials a:hover { color: var(--mint); }
+.fundador-socials .arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+.fundador-socials a:hover .arrow { transform: translateX(4px); }
+
 @media (max-width: 900px) {
-    .tesis { padding: 80px 24px 60px; }
-    .tesis-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+    .fundador { padding: 80px 24px; }
+    .fundador-title { margin-bottom: 40px; }
+    .fundador-grid { grid-template-columns: 1fr; gap: 3rem; }
 }
 
 @media (max-width: 600px) {
-    .tesis { padding: 60px 18px 50px; }
-    .tesis-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .tesis-label { margin-bottom: 36px; }
+    .fundador { padding: 60px 18px; }
+    .fundador-eyebrow { font-size: 10px; }
+    .fundador-card { padding: 28px 24px; }
 }
 
 /* ============================================================
@@ -1088,6 +1200,27 @@ img, svg { max-width: 100%; height: auto; display: block; }
     align-items: center;
     will-change: transform, opacity;
     padding: 0 32px;
+    transform: translate(0, 0);
+    opacity: 1;
+    transition:
+        transform 0.8s cubic-bezier(.2,.7,.2,1),
+        opacity 0.6s ease;
+}
+
+/* Fase 3 — slide-out hacia la derecha (desktop) o hacia abajo (mobile) */
+.signal-track.is-leaving {
+    transform: translateX(110vw);
+    opacity: 0;
+    transition:
+        transform 0.9s cubic-bezier(.6,0,.2,1),
+        opacity 0.35s ease 0.25s;
+}
+
+/* Reset — snap a la izquierda (desktop) o arriba (mobile), sin transición */
+.signal-track.is-snap-back {
+    transform: translateX(-30vw);
+    opacity: 0;
+    transition: none;
 }
 
 .signal-word {
@@ -1258,10 +1391,11 @@ img, svg { max-width: 100%; height: auto; display: block; }
 
     .hook-counter { right: 36px; }
 
+    /* Signal tablet (>720 y ≤1100): grid sigue, pero más compacto */
     .signal-section { padding-top: 80px; }
     .signal-rail { height: 180px; }
-    .signal-track { padding: 0 16px; }
-    .signal-word { gap: 10px; font-size: clamp(36px, 6vw, 80px); }
+    .signal-track { padding: 0 24px; gap: 8px; }
+    .signal-word { gap: 10px; font-size: clamp(32px, 4.6vw, 64px); }
 
     .foot { grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; padding: 60px 24px 32px; }
     .foot .foot-col:last-child { display: none; }
@@ -1330,14 +1464,50 @@ img, svg { max-width: 100%; height: auto; display: block; }
     .hook-counter { right: 22px; bottom: 20px; }
     .hook-ctas { flex-direction: column; align-items: stretch; }
 
-    /* signal */
+    /* Signal mobile (≤720): apilar VERTICAL con número prefix y slide vertical */
     .signal-section { padding-top: 60px; }
-    .signal-caption { padding: 16px 18px; font-size: 9px; gap: 10px; }
-    .signal-rail { height: 140px; }
-    .signal-track { padding: 0 8px; }
-    .signal-word { font-size: clamp(22px, 8.5vw, 44px); gap: 6px; }
-    .signal-word .num { display: none; }
-    .signal-light { width: 10px; padding: 3px; gap: 3px; margin-top: 12px; }
+    .signal-caption {
+        padding: 16px 18px;
+        font-size: 9px;
+        gap: 6px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .signal-rail {
+        height: auto;
+        min-height: 280px;
+    }
+    .signal-track {
+        position: relative;        /* sale del absolute para que el rail crezca */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 28px 22px;
+        width: 100%;
+    }
+    /* Slide-out vertical en mobile */
+    .signal-track.is-leaving  { transform: translateY(60vh); }
+    .signal-track.is-snap-back { transform: translateY(-30vh); }
+
+    .signal-word {
+        justify-content: flex-start;
+        font-size: clamp(34px, 9vw, 56px);
+        gap: 10px;
+        width: 100%;
+    }
+    .signal-word .num {
+        display: inline-block;
+        position: relative;
+        top: auto; left: auto;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--ink-mute);
+        align-self: center;
+    }
+    .signal-light { width: 10px; padding: 3px; gap: 3px; margin-top: 0; align-self: center; }
     .signal-light .bulb { width: 4px; height: 4px; }
 
     /* footer */
@@ -1351,7 +1521,8 @@ img, svg { max-width: 100%; height: auto; display: block; }
 /* small phones */
 @media (max-width: 420px) {
     .iberohub-mark { font-size: clamp(60px, 20vw, 100px); }
-    .signal-word { font-size: clamp(20px, 8vw, 36px); }
+    .signal-track { padding: 24px 16px; }
+    .signal-word { font-size: clamp(28px, 8vw, 42px); }
     .folder.f04 .folder-left h2 { font-size: clamp(28px, 8vw, 40px); }
 }
 

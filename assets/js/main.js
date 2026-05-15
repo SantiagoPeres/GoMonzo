@@ -259,26 +259,20 @@
             if (stateLabel) stateLabel.textContent = labels[phase];
 
             if (phase === 3) {
-                // slide-out a la derecha
-                track.style.transition = 'transform .9s cubic-bezier(.6,0,.2,1), opacity .35s ease .25s';
-                track.style.transform = 'translateX(110vw)';
-                track.style.opacity = '0';
+                // Slide-out (CSS decide si translateX desktop o translateY mobile)
+                track.classList.remove('is-snap-back');
+                track.classList.add('is-leaving');
             } else if (phase === 0) {
-                // snap a la izquierda y deslizar de vuelta
-                track.style.transition = 'none';
-                track.style.transform = 'translateX(-30vw)';
-                track.style.opacity = '0';
+                // Snap a la posición opuesta (sin transición) y volver al centro
+                track.classList.remove('is-leaving');
+                track.classList.add('is-snap-back');
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
-                        track.style.transition = 'transform .8s cubic-bezier(.2,.7,.2,1), opacity .6s ease';
-                        track.style.transform = 'translateX(0)';
-                        track.style.opacity = '1';
+                        track.classList.remove('is-snap-back');
                     });
                 });
             } else {
-                track.style.transition = 'none';
-                track.style.transform = 'translateX(0)';
-                track.style.opacity = '1';
+                track.classList.remove('is-leaving', 'is-snap-back');
             }
         };
 
@@ -447,6 +441,37 @@
         });
     };
 
+    /* ---------- Manifiesto del fundador — stagger reveal (una sola vez) ---------- */
+    const initFundadorReveal = () => {
+        const frases = document.querySelectorAll('.manifesto-frase');
+        if (!frases.length) return;
+
+        frases.forEach((el, i) => el.style.setProperty('--i', i));
+
+        if (prefersReducedMotion) {
+            frases.forEach((el) => el.classList.add('is-visible'));
+            return;
+        }
+
+        if (!('IntersectionObserver' in window)) {
+            frases.forEach((el) => el.classList.add('is-visible'));
+            return;
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    frases.forEach((el) => el.classList.add('is-visible'));
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.2 });
+
+        // Observa la sección entera para disparar todas las frases juntas (stagger via CSS delay)
+        const section = document.querySelector('.fundador');
+        io.observe(section || frases[0]);
+    };
+
     /* ---------- HOOK filename rotator ---------- */
     const initHookFilename = () => {
         const el = document.getElementById('hook-filename');
@@ -467,6 +492,7 @@
         initSignal();
         initHookFilename();
         initIberofinanceCarousel();
+        initFundadorReveal();
     };
 
     if (document.readyState === 'loading') {
