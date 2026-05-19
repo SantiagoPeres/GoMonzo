@@ -980,58 +980,66 @@ img, svg { max-width: 100%; height: auto; display: block; }
 }
 
 /* ============================================================
-   EL FUNDADOR — manifiesto + tarjeta (entre stack y signal)
+   EL ESTUDIO — manifiesto + tarjeta del founder (entre stack y signal)
    ============================================================ */
-.fundador {
+.estudio {
     position: relative;
     background: var(--bg-2);
-    padding: clamp(80px, 12vh, 120px) 40px clamp(80px, 10vh, 120px);
+    padding: 120px 64px 80px;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
 }
 
-.fundador-eyebrow {
+.estudio-eyebrow {
+    display: flex; align-items: center; gap: 14px;
     font-family: var(--font-mono);
     font-size: 11px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--mint);
-    margin: 0 0 28px;
-    display: flex; align-items: center; gap: 10px;
+    color: var(--ink-mute);
+    margin: 0 0 44px;
 }
-.fundador-eyebrow .dot {
+.estudio-eyebrow .dot {
     width: 7px; height: 7px;
     background: var(--mint);
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent-dim, rgba(93,217,164,0.4));
+    box-shadow: 0 0 10px var(--mint);
 }
 
-.fundador-title {
+.estudio-title {
     font-family: var(--font-display);
-    font-size: clamp(48px, 5vw, 88px);
-    line-height: 1;
-    letter-spacing: -0.02em;
+    font-size: clamp(80px, 9vw, 160px);
+    line-height: 0.92;
+    letter-spacing: -0.015em;
     color: var(--ink);
     font-weight: 400;
-    margin: 0 0 64px;
+    margin: 0 0 56px;
+}
+.estudio-period {
+    color: var(--mint);
 }
 
-.fundador-grid {
+.estudio-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: clamp(2rem, 5vw, 5rem);
+    grid-template-columns: 1.05fr 1fr;
+    gap: 80px;
     align-items: start;
 }
 
+.estudio-text {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Manifiesto */
-.fundador-manifesto {
+.estudio-manifesto {
     display: flex; flex-direction: column;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    max-width: 56ch;
+    gap: 28px;
+    max-width: 580px;
 }
 .manifesto-frase {
     font-family: var(--font-body);
-    font-size: clamp(16px, 1.2vw, 19px);
+    font-size: 19px;
     line-height: 1.5;
     color: var(--ink-dim);
     margin: 0;
@@ -1048,108 +1056,167 @@ img, svg { max-width: 100%; height: auto; display: block; }
     transform: translateY(0);
 }
 .manifesto-frase::first-letter {
+    font-family: var(--font-display);
     color: var(--mint);
-    font-weight: 600;
-    font-size: 1.4em;
-    letter-spacing: -0.01em;
+    font-size: 1.35em;
+    line-height: 0.9;
+    padding-right: 2px;
+    vertical-align: -2px;
 }
 
-/* Tarjeta del fundador */
-.fundador-card {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 36px 32px;
-    display: flex; flex-direction: column; align-items: flex-start;
-    gap: 8px;
+/* Tarjeta del estudio — foto + info lado a lado */
+.estudio-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 36px;
+    align-items: stretch;
+    margin-top: 8px;
+}
+
+.estudio-photo {
     position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
+    background: #0e1117;
+    box-shadow:
+        inset 0 0 0 1px var(--line-2),
+        0 30px 60px rgba(0,0,0,0.45),
+        0 10px 24px rgba(0,0,0,0.4);
 }
-.fundador-card::before {
-    content: "";
+.estudio-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 12%;
+    display: block;
+    filter: grayscale(0.05) contrast(1.04);
+}
+.estudio-photo-mark {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(93,217,164,0.06) 0%, transparent 60%);
-    pointer-events: none;
-}
-
-.fundador-avatar {
-    width: 76px; height: 76px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(93,217,164,0.15), rgba(93,217,164,0.04));
-    border: 1px solid rgba(93,217,164,0.35);
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 18px;
-}
-.fundador-avatar span {
-    font-family: var(--font-display);
-    font-size: 38px;
-    color: var(--mint);
-    line-height: 1;
-}
-
-.fundador-name {
-    font-family: var(--font-display);
-    font-size: clamp(26px, 2vw, 32px);
-    line-height: 1.05;
-    color: var(--ink);
-    margin: 0;
-    font-weight: 400;
-}
-.fundador-role {
+    top: 12px; left: 12px;
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 9px;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--mint);
-    margin: 4px 0 0;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 7px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    z-index: 2;
 }
-.fundador-loc {
+.estudio-photo-mark::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--mint);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--mint);
+}
+.estudio-photo-frame {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(243, 238, 223, 0.18);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.estudio-info {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+}
+.estudio-role {
     font-family: var(--font-mono);
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--ink-mute);
-    margin: 0 0 22px;
+    color: var(--mint);
+    margin: 0 0 16px;
 }
-
-.fundador-socials {
-    list-style: none;
-    margin: 0; padding: 0;
-    display: flex; flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    border-top: 1px solid var(--line);
-    padding-top: 20px;
+.estudio-name {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 3.4vw, 56px);
+    line-height: 0.96;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin: 0 0 4px;
+    font-weight: 400;
 }
-.fundador-socials li {
+.estudio-loc {
     font-family: var(--font-mono);
     font-size: 11px;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 28px;
+}
+
+.estudio-bio {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+    margin: 0 0 18px;
+    max-width: 360px;
+}
+.estudio-bio em {
+    font-family: var(--font-italic);
+    font-style: italic;
+    color: var(--mint);
+    font-weight: 400;
+}
+
+.estudio-stack {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-mute);
+    margin: 0 0 32px;
+    padding-left: 12px;
+    border-left: 1px solid var(--line-2);
+    line-height: 1.5;
+}
+
+.estudio-socials {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.estudio-socials li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
 }
-.fundador-socials a {
+.estudio-socials a {
     color: var(--ink-dim);
     display: inline-flex; align-items: center; gap: 8px;
-    transition: color 0.2s;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
-.fundador-socials a:hover { color: var(--mint); }
-.fundador-socials .arrow {
-    display: inline-block;
-    transition: transform 0.25s ease;
-}
-.fundador-socials a:hover .arrow { transform: translateX(4px); }
-
-@media (max-width: 900px) {
-    .fundador { padding: 80px 24px; }
-    .fundador-title { margin-bottom: 40px; }
-    .fundador-grid { grid-template-columns: 1fr; gap: 3rem; }
+.estudio-socials a:hover { color: var(--mint); }
+.estudio-socials a::after {
+    content: "↗";
+    font-size: 12px;
+    opacity: 0.6;
 }
 
-@media (max-width: 600px) {
-    .fundador { padding: 60px 18px; }
-    .fundador-eyebrow { font-size: 10px; }
-    .fundador-card { padding: 28px 24px; }
+@media (max-width: 1100px) {
+    .estudio { padding: 96px 32px 64px; }
+    .estudio-grid { grid-template-columns: 1fr; gap: 64px; }
+    .estudio-card { grid-template-columns: 220px 1fr; gap: 28px; }
+}
+
+@media (max-width: 640px) {
+    .estudio { padding: 72px 20px 56px; }
+    .estudio-title { font-size: clamp(64px, 16vw, 96px); margin-bottom: 36px; }
+    .manifesto-frase { font-size: 17px; }
+    .estudio-card { grid-template-columns: 1fr; gap: 28px; }
+    .estudio-photo { max-width: 280px; }
 }
 
 /* ============================================================

@@ -526,8 +526,8 @@
         });
     };
 
-    /* ---------- Manifiesto del fundador — stagger reveal (una sola vez) ---------- */
-    const initFundadorReveal = () => {
+    /* ---------- Manifiesto del estudio — stagger reveal (una sola vez) ---------- */
+    const initEstudioReveal = () => {
         const frases = document.querySelectorAll('.manifesto-frase');
         if (!frases.length) return;
 
@@ -553,7 +553,7 @@
         }, { threshold: 0.2 });
 
         // Observa la sección entera para disparar todas las frases juntas (stagger via CSS delay)
-        const section = document.querySelector('.fundador');
+        const section = document.querySelector('.estudio');
         io.observe(section || frases[0]);
     };
 
@@ -577,7 +577,7 @@
         initSignal();
         initHookFilename();
         initIberofinanceCarousel();
-        initFundadorReveal();
+        initEstudioReveal();
     };
 
     if (document.readyState === 'loading') {
