@@ -1,0 +1,33 @@
+# Iberohub
+
+> Venture studio en Madrid, fundado en 2025 por Santiago Monzo.
+> Construye productos propios de software. Y también crea softwares para otras empresas de Europa y America do sul,
+> no es outsourcing, software house y venture.
+
+## Tesis
+
+- El mejor software se construye con tiempo, no con prisa de inversor.
+- Un producto a la vez, hasta que respira solo.
+- Integridad técnica supera al hype.
+- Softwares modernos e seguros.
+
+## Productos
+
+- [Iberofinance](https://iberofinance.com) — fintech española de gestión
+  de patrimonio. En producción 2026.
+
+  Multiplas ferramentas que auxiliam o investidor a trabalhar melhor no seu setup,
+  cuidar do seu patrimonio, gerenciar os riscos, graças a ferramentas de analise de IA,
+  podendo gestionar melhor a carteira de investimentos diversificando activos
+  e mostrando a saúde da carteira.
+
+## Founder
+
+Santiago Monzo. Madrid. Senior dev and architect (Angular, NestJS, .NET, Python).
+
+- LinkedIn: https://www.linkedin.com/in/santiagomonzo/
+- GitHub: https://github.com/SantiagoPeres
+
+## Contacto
+
+hola@iberohub.com
