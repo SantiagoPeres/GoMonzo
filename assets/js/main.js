@@ -586,3 +586,93 @@
         start();
     }
 })();
+
+/* ============================================================
+   CONTACTO — copy buttons + form submit (Formspree AJAX)
+   ============================================================ */
+(() => {
+    const initCopy = () => {
+        const buttons = document.querySelectorAll('.contacto-card .card-action[data-copy]');
+        buttons.forEach((btn) => {
+            const textEl = btn.querySelector('.copy-text');
+            const original = textEl ? textEl.textContent : '';
+            btn.addEventListener('click', async () => {
+                const value = btn.getAttribute('data-copy');
+                if (!value) return;
+                try {
+                    await navigator.clipboard.writeText(value);
+                } catch {
+                    const ta = document.createElement('textarea');
+                    ta.value = value;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy'); } catch {}
+                    document.body.removeChild(ta);
+                }
+                btn.classList.add('is-copied');
+                if (textEl) textEl.textContent = 'Copiado';
+                setTimeout(() => {
+                    btn.classList.remove('is-copied');
+                    if (textEl) textEl.textContent = original;
+                }, 1800);
+            });
+        });
+    };
+
+    const initForm = () => {
+        const form = document.getElementById('contacto-form');
+        if (!form) return;
+        const submit = form.querySelector('.form-submit');
+        const status = document.getElementById('form-status');
+
+        const setStatus = (message, type) => {
+            if (!status) return;
+            status.textContent = message;
+            status.classList.remove('is-success', 'is-error');
+            if (type) status.classList.add(`is-${type}`);
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            submit.disabled = true;
+            submit.classList.add('is-loading');
+            setStatus('Enviando', null);
+
+            try {
+                const data = new FormData(form);
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    form.reset();
+                    setStatus('Mensaje enviado · Respondo en menos de 48h', 'success');
+                } else {
+                    const json = await res.json().catch(() => ({}));
+                    const msg = (json.errors && json.errors[0] && json.errors[0].message)
+                        || 'No pudimos enviar — intenta de nuevo';
+                    setStatus(msg, 'error');
+                }
+            } catch {
+                setStatus('Sin conexión · Intenta de nuevo', 'error');
+            } finally {
+                submit.disabled = false;
+                submit.classList.remove('is-loading');
+            }
+        });
+    };
+
+    const boot = () => { initCopy(); initForm(); };
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
+})();
