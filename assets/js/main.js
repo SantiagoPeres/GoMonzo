@@ -389,22 +389,33 @@
         });
     };
 
-    /* ---------- Iberofinance carousel — cursor falso + click + image swap ----------
+    /* ---------- Carruseles de producto — cursor falso + click + image swap ----------
        Timeline: moving 1100ms → acting 350ms → showing+holding 2400ms → next step.
        La imagen NO cambia hasta que el cursor "actúa" (causa-efecto).
     */
-    const initIberofinanceCarousel = () => {
-        const root = document.getElementById('iberofinance-carousel');
-        if (!root) return;
-
-        const STEPS = [
+    const CAROUSEL_STEPS = {
+        'iberofinance-carousel': [
             { x: 0.245, y: 0.022, label: 'Painel',           action: 'click'  },
             { x: 0.305, y: 0.022, label: 'Carteira',         action: 'click'  },
             { x: 0.52,  y: 0.62,  label: 'Explorar activos', action: 'scroll' },
             { x: 0.395, y: 0.022, label: 'Fluxo de caixa',   action: 'click'  },
             { x: 0.555, y: 0.022, label: 'Robôs',            action: 'click'  },
             { x: 0.625, y: 0.022, label: 'Simulação',        action: 'click'  }
-        ];
+        ],
+        'pilatesfloat-carousel': [
+            { x: 0.15,  y: 0.042, label: 'Inicio',       action: 'click'  },
+            { x: 0.305, y: 0.042, label: 'Para Hoteles', action: 'click'  },
+            { x: 0.489, y: 0.042, label: 'Experiencias', action: 'click'  },
+            { x: 0.573, y: 0.042, label: 'Nosotros',     action: 'click'  },
+            { x: 0.5,   y: 0.55,  label: 'Galería',      action: 'scroll' }
+        ]
+    };
+
+    const initProductCarousel = (id) => {
+        const root = document.getElementById(id);
+        if (!root) return;
+
+        const STEPS = CAROUSEL_STEPS[id];
 
         const imgs = Array.from(root.querySelectorAll('.carousel-img'));
         const dots = Array.from(root.querySelectorAll('.pdot'));
@@ -576,7 +587,7 @@
         initStack();
         initSignal();
         initHookFilename();
-        initIberofinanceCarousel();
+        Object.keys(CAROUSEL_STEPS).forEach(initProductCarousel);
         initEstudioReveal();
     };
 

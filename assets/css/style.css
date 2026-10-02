@@ -827,7 +827,7 @@ img, svg { max-width: 100%; height: auto; display: block; }
     min-height: 460px;
 }
 
-/* product 01 — browser-framed carousel animado */
+/* product 01 / 02 — browser-framed carousel animado */
 .browser-frame {
     width: 100%; max-width: 720px;
     background: #f5f7f3;
@@ -1004,41 +1004,6 @@ img, svg { max-width: 100%; height: auto; display: block; }
     width: 22px;
     border-radius: 3px;
     box-shadow: 0 0 10px rgba(93, 217, 164, 0.7);
-}
-
-/* product 02 — audit mock */
-.audit-mock {
-    width: 100%; max-width: 640px;
-    aspect-ratio: 16/10;
-    background: #0c0d10;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    position: relative;
-}
-.audit-mock .panel {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70%; height: 60%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 10px;
-    padding: 18px;
-}
-.audit-mock .row {
-    height: 2px;
-    background: rgba(255, 255, 255, 0.25);
-    margin: 18px 0;
-    border-radius: 2px;
-}
-.audit-mock .row.r1 { width: 80%; }
-.audit-mock .row.r2 { width: 55%; }
-.audit-mock .row.r3 { width: 70%; }
-.audit-mock .row.r4 { width: 40%; }
-.audit-mock .corner {
-    position: absolute; top: 18px; right: 18px;
-    font-family: var(--font-mono); font-size: 9px;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.15em;
 }
 
 /* product 03 — calendar mock */
@@ -1689,7 +1654,7 @@ img, svg { max-width: 100%; height: auto; display: block; }
     .folder-divider { left: 36px; right: 36px; }
 
     .folder-right { min-height: 320px; }
-    .browser-frame, .audit-mock, .cal-mock, .hook-card { max-width: 100%; }
+    .browser-frame, .cal-mock, .hook-card { max-width: 100%; }
 
     .hook-counter { right: 36px; }
 
