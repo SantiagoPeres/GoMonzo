@@ -1,0 +1,89 @@
+/* ============================================================
+   IBEROHUB · Páginas legales (aviso legal, privacidad)
+   Usa los tokens y la tipografía de style.css.
+   ============================================================ */
+.legal {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 160px 24px 100px;
+}
+.legal-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 18px;
+}
+.legal h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+}
+.legal-updated {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 56px;
+}
+.legal h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.005em;
+    margin: 52px 0 14px;
+    color: var(--ink);
+}
+.legal p,
+.legal li {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-dim);
+}
+.legal p { margin: 0 0 14px; }
+.legal ul { margin: 0 0 14px; padding-left: 20px; }
+.legal li { margin-bottom: 8px; }
+.legal strong { color: var(--ink); font-weight: 600; }
+.legal a {
+    color: var(--mint);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.legal a:hover { color: var(--ink); }
+
+.legal-data {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 10px 28px;
+    margin: 0;
+    padding: 24px;
+    border: 1px solid var(--line-2);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+}
+.legal-data dt {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-top: 4px;
+}
+.legal-data dd {
+    margin: 0;
+    font-size: 16px;
+    color: var(--ink);
+}
+.legal-data dd a { color: var(--ink); }
+
+@media (max-width: 720px) {
+    .legal { padding: 130px 18px 72px; }
+    .legal-data { grid-template-columns: 1fr; gap: 4px; padding: 20px; }
+    .legal-data dd { margin-bottom: 12px; }
+}

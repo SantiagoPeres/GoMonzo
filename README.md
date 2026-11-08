@@ -32,7 +32,7 @@ We're not an agency. We're a small, founder-led studio that designs, ships and o
 > **Status:** Live in production · **Stack:** Angular · NestJS · Python · PostgreSQL · Stripe
 
 ### More products coming soon
-> We're building in public. Follow [**@monzovision**](https://instagram.com/monzovision) for behind-the-scenes.
+> We're building in public.
 
 ---
 
@@ -68,7 +68,6 @@ Looking to partner, invest, or just talk shop?
 
 - 🌐 [iberohub.com](https://iberohub.com)
 - 💼 [LinkedIn — Santiago Monzo](https://linkedin.com/in/santiagomonzo)
-- ✉️ [santiagogmonzo@gmail.com](mailto:santiagogmonzo@gmail.com)
 
 ---
 

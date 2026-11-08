@@ -30,4 +30,5 @@ Santiago Monzo. Madrid. Senior dev and architect (Angular, NestJS, .NET, Python)
 
 ## Contacto
 
-hola@iberohub.com
+- Email: hola@iberohub.com
+- Teléfono y WhatsApp: +34 910 05 51 51

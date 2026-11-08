@@ -2221,3 +2221,32 @@ a.contacto-card:hover .card-arrow {
     .contacto-form-glow,
     .contacto-eyebrow .pulse { animation: none; }
 }
+
+/* ============================================================
+   CONTACTO · teléfono + PIE · teléfono y enlaces legales
+   ============================================================ */
+.contacto-card--phone { flex-wrap: wrap; }
+.contacto-card .card-actions {
+    display: flex;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+.contacto-card a.card-action { text-decoration: none; }
+
+.foot-brand .tel { color: var(--ink-dim); }
+.foot-brand .tel a:hover { color: var(--ink); }
+.foot-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.foot-legal-links a { color: var(--ink-dim); transition: color 0.2s ease; }
+.foot-legal-links a:hover { color: var(--mint); }
+
+@media (max-width: 520px) {
+    /* Los botones pasan a su propia fila para que el número no se corte */
+    .contacto-card--phone .card-actions {
+        flex-basis: 100%;
+        padding-left: 58px;
+    }
+}

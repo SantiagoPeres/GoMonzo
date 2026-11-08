@@ -31,7 +31,10 @@
 
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/folders.css">
+    <link rel="stylesheet" href="./assets/css/chatbot.css">
     <script defer src="./assets/js/main.js"></script>
+    <script defer src="./assets/js/chatbot-config.js"></script>
+    <script defer src="./assets/js/chatbot.js"></script>
 
     <script type="application/ld+json">
     {
@@ -40,6 +43,7 @@
       "name": "Iberohub",
       "url": "https://iberohub.com",
       "description": "Venture studio de Madrid que construye, opera y escala sus propios productos de software.",
+      "telephone": "+34 910 05 51 51",
       "address": { "@type": "PostalAddress", "addressLocality": "Madrid", "addressCountry": "ES" },
       "founder": { "@type": "Person", "name": "Santiago Monzo" },
       "subOrganization": [
@@ -122,7 +126,7 @@
                 <a href="#productos" class="btn primary">
                     Ver el portfolio <span class="arrow">→</span>
                 </a>
-                <a href="#contacto" class="btn ghost">
+                <a href="mailto:hola@iberohub.com" class="btn ghost">
                     hola@iberohub.com <span class="arrow">→</span>
                 </a>
             </div>
@@ -418,29 +422,31 @@
                             Cuéntanos. Iberohub puede ser tu partner técnico para construir, lanzar o escalar.
                         </p>
                         <div class="hook-ctas">
-                            <a href="#contacto" class="btn hook-primary">
+                            <a href="#chat" class="btn hook-primary" data-chat-open>
                                 Cuéntanos tu idea <span class="arrow">→</span>
                             </a>
-                            <a href="#contacto" class="btn hook-secondary">Reservar 20 min</a>
+                            <a href="#chat" class="btn hook-secondary" data-chat-booking>Reservar 20 min</a>
                         </div>
                     </div>
 
                     <div class="folder-right">
-                        <div class="hook-card" aria-hidden="true">
+                        <div class="hook-card" id="chat">
+                            <!-- Clic en cualquier parte de la tarjeta (solo ratón/táctil; el teclado usa "Empezar") -->
+                            <button type="button" class="hook-card-open" data-chat-open tabindex="-1" aria-hidden="true"></button>
                             <div class="filename">
                                 <span id="hook-filename">tu_idea.txt</span>
                             </div>
-                            <div class="scribble">
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <span class="cursor"></span>
+                            <div class="hook-preview">
+                                <span class="hook-preview-label"><span class="dot" aria-hidden="true"></span>Chat · menos de 1 minuto</span>
+                                <p class="chat-msg chat-msg--bot hook-preview-msg"><span data-chat-welcome>Hola, soy el asistente de IberoHub. En un minuto vemos cómo podemos ayudarte.</span><span class="cursor" aria-hidden="true"></span></p>
+                                <button type="button" class="btn hook-primary chat-start" data-chat-start>Empezar <span class="arrow" aria-hidden="true">→</span></button>
+                                <p class="chat-legal" data-chat-legal></p>
                             </div>
-                            <div class="meta-row">
-                                <span>archivo abierto</span>
+                            <div class="meta-row" aria-hidden="true">
+                                <span>6 preguntas · sin registro</span>
                                 <span>est. iberohub · madrid</span>
                             </div>
+                            <div class="chat" id="chat-panel" role="region" hidden></div>
                         </div>
                     </div>
 
@@ -582,6 +588,23 @@
                             </button>
                         </div>
 
+                        <!-- Teléfono y WhatsApp -->
+                        <div class="contacto-card contacto-card--phone">
+                            <span class="card-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </span>
+                            <div class="card-body">
+                                <span class="card-label">Teléfono y WhatsApp</span>
+                                <span class="card-value">+34 910 05 51 51</span>
+                            </div>
+                            <div class="card-actions">
+                                <a class="card-action" href="tel:+34910055151" aria-label="Llamar al +34 910 05 51 51">Llamar</a>
+                                <a class="card-action" href="https://wa.me/34910055151" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp al +34 910 05 51 51 (abre en nueva pestaña)">WhatsApp</a>
+                            </div>
+                        </div>
+
                         <!-- LinkedIn -->
                         <a class="contacto-card contacto-card--link" href="https://www.linkedin.com/in/santiagomonzo/" target="_blank" rel="noopener" aria-label="LinkedIn de Santiago Monzo (abre en nueva pestaña)">
                             <span class="card-icon" aria-hidden="true">
@@ -616,12 +639,24 @@
                 <div class="contacto-right">
                     <div class="contacto-form-glow" aria-hidden="true"></div>
 
-                    <form class="contacto-form" id="contacto-form" action="https://formspree.io/f/mzzpqgvw" method="POST" novalidate>
+                    <div class="contacto-form contacto-cta">
                         <div class="form-header">
                             <span class="form-eyebrow">Hablemos</span>
                             <h3 class="form-title">Cuéntanos tu idea</h3>
                         </div>
 
+                        <p class="contacto-cta-text">Unos pocos clics. En menos de un minuto vemos cómo podemos ayudarte.</p>
+
+                        <a href="#chat" class="form-submit" data-chat-open>
+                            <span class="submit-label">Abrir el chat</span>
+                            <span class="submit-arrow" aria-hidden="true">→</span>
+                        </a>
+
+                        <details class="contacto-otro">
+                            <summary>¿Otra cosa? Escríbenos</summary>
+                            <p class="contacto-otro-text">Para inversión, colaboración u otros temas.</p>
+
+                    <form class="contacto-otro-form" id="contacto-form" action="https://formspree.io/f/mzzpqgvw" method="POST" novalidate>
                         <div class="form-field">
                             <input type="text" id="f-nombre" name="nombre" required autocomplete="name" placeholder=" ">
                             <label for="f-nombre">Nombre</label>
@@ -635,7 +670,6 @@
                         <div class="form-field form-field--select">
                             <select id="f-tipo" name="tipo" required>
                                 <option value="" disabled selected>Selecciona un tipo</option>
-                                <option value="producto">Sobre un producto</option>
                                 <option value="inversion">Inversión</option>
                                 <option value="colaboracion">Colaboración</option>
                                 <option value="otro">Otro</option>
@@ -653,6 +687,8 @@
                             <input type="text" id="f-website" name="_gotcha" tabindex="-1" autocomplete="off">
                         </div>
 
+                        <p class="chat-legal">Al enviar, aceptas la <a href="privacidad.html">política de privacidad</a>.</p>
+
                         <button type="submit" class="form-submit">
                             <span class="submit-label">Enviar mensaje</span>
                             <span class="submit-arrow" aria-hidden="true">→</span>
@@ -660,6 +696,8 @@
 
                         <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
                     </form>
+                        </details>
+                    </div>
                 </div>
             </div>
         </section>
@@ -672,6 +710,7 @@
             <div class="foot-col foot-brand">
                 <div class="logo">Iberohub<span class="dot" aria-hidden="true"></span></div>
                 <div class="email"><a href="mailto:hola@iberohub.com">hola@iberohub.com</a></div>
+                <div class="tel"><a href="tel:+34910055151">+34 910 05 51 51</a></div>
                 <div class="loc">Madrid, España</div>
             </div>
             <div class="foot-col">
@@ -699,7 +738,10 @@
             </div>
         </div>
         <div class="foot-end">
-            <span>© 2026 IBEROHUB · El futuro del software es hoy.</span>
+            <div class="foot-legal">
+                <span>© 2026 IBEROHUB · El futuro del software es hoy.</span>
+                <span class="foot-legal-links"><a href="aviso-legal.html">Aviso legal</a> · <a href="privacidad.html">Privacidad</a></span>
+            </div>
             <span class="quote">Construir es la única forma honesta de hablar.</span>
         </div>
     </footer>
