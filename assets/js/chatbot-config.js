@@ -8,10 +8,10 @@ window.IBEROHUB_CHATBOT = {
     legal: {
         before: 'Al continuar, aceptas la ',
         privacyLabel: 'política de privacidad',
-        privacyUrl: 'privacidad.html',
+        privacyUrl: 'privacidad',
         middle: ' y el ',
         noticeLabel: 'aviso legal',
-        noticeUrl: 'aviso-legal.html',
+        noticeUrl: 'aviso-legal',
         after: '.'
     },
 
