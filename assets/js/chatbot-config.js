@@ -1,7 +1,8 @@
 /* ============================================================
-   IBEROHUB · Chat de diagnóstico: guion y reglas
-   Todo el texto y la lógica de recomendación viven aquí.
-   Se puede editar sin tocar assets/js/chatbot.js.
+   IBEROHUB · Chat guiado del sitio
+   Ayuda a explicar el problema o la idea y lo pasa a WhatsApp,
+   donde sigue AIVA. Sin precios, sin recomendaciones automáticas.
+   Todo el texto vive aquí; el motor está en assets/js/chatbot.js.
    ============================================================ */
 window.IBEROHUB_CHATBOT = {
     /* Aviso antes de la primera pregunta (vista previa y bienvenida). */
@@ -20,35 +21,110 @@ window.IBEROHUB_CHATBOT = {
     whatsapp: {
         number: '34910055151',
         missingNumberNotice: 'Modo prueba · falta el número de WhatsApp',
-        /* Botón "Reservar 20 min" de la tarjeta, cuando ya haya número. */
+        /* Botón "Reservar 20 min" de la tarjeta (fuera del chat). */
         directMessage: 'Hola, vengo de iberohub.com y quiero reservar la llamada de 20 minutos.',
-        /* Mensaje que queda escrito al terminar el chat. El cliente decide si lo envía. */
-        intro: 'Hola, vengo del chat de iberohub.com.',
+        /* Primera línea del mensaje. El Brain reconoce este formato: no cambiarla. */
+        intro: 'Hola, vengo del chat de iberohub.com',
+        /* Orden y nombres de los campos del mensaje. Sector, Equipo y Mi problema
+           van primero porque el Brain ya los reconoce. Los campos sin respuesta
+           o con "Aún no lo sé" no se incluyen. */
         fields: [
             { step: 'sector', label: 'Sector' },
             { step: 'equipo', label: 'Equipo' },
-            { step: 'frecuencia', label: 'Frecuencia' },
-            { step: 'horas', label: 'Horas a la semana' },
-            { step: 'busca', label: 'Busco' },
-            { step: 'problema', label: 'Mi problema' }
-        ],
-        recommendationLabel: 'Recomendación'
+            { step: 'problema', label: 'Mi problema' },
+            { step: 'tipo', label: 'Busco' },
+            { step: 'objetivo', label: 'Objetivo' },
+            { step: 'publico', label: 'Para quién' },
+            { step: 'fase', label: 'Fase' },
+            { step: 'situacion', label: 'Situación actual' }
+        ]
     },
 
     labels: {
         progress: 'Paso {n} de {total}',
         back: '← Atrás',
+        finish: 'Terminar aquí',
+        finishEcho: 'Prefiero terminar aquí.',
         restart: 'Empezar de nuevo',
         send: 'Enviar',
-        chatName: 'Chat de diagnóstico de IberoHub'
+        chatName: 'Chat de IberoHub'
     },
 
+    /* Tipos: welcome, choice, text. Una opción con "unknown: true" no se pasa a WhatsApp.
+       Un paso con "when" solo aparece si se cumplen esas respuestas. */
     steps: [
         {
             id: 'bienvenida',
             type: 'welcome',
-            bot: 'Hola, soy el asistente de IberoHub. En un minuto vemos cómo podemos ayudarte.',
+            bot: 'Hola. Cuéntame qué tienes en mente y te ayudo a explicarlo. Después seguimos por WhatsApp con AIVA, la asistente de IberoHub.',
             cta: 'Empezar'
+        },
+        {
+            id: 'tipo',
+            type: 'choice',
+            bot: '¿Qué te trae por aquí?',
+            options: [
+                { id: 'idea', label: 'Tengo una idea de app o producto', message: 'Crear una app o un producto nuevo' },
+                { id: 'problema', label: 'Quiero resolver un problema', message: 'Resolver un problema' },
+                { id: 'mejorar', label: 'Quiero mejorar algo que ya tengo', message: 'Mejorar algo que ya tengo' },
+                { id: 'no-se', label: 'Aún no lo sé', unknown: true }
+            ]
+        },
+        {
+            id: 'problema',
+            type: 'text',
+            bot: 'Cuéntamelo en una o dos frases, con tus palabras.',
+            fieldLabel: 'Tu problema o idea (opcional)',
+            maxLength: 300,
+            skip: 'Saltar',
+            skipEcho: 'Prefiero contarlo por WhatsApp.'
+        },
+        {
+            id: 'objetivo',
+            type: 'choice',
+            bot: '¿Qué te gustaría conseguir?',
+            options: [
+                { id: 'tiempo', label: 'Ahorrar tiempo' },
+                { id: 'clientes', label: 'Conseguir más clientes' },
+                { id: 'servicio', label: 'Dar un mejor servicio' },
+                { id: 'lanzar', label: 'Lanzar algo nuevo' },
+                { id: 'no-se', label: 'Aún no lo sé', unknown: true }
+            ]
+        },
+        {
+            id: 'publico',
+            type: 'choice',
+            bot: '¿Para quién sería?',
+            options: [
+                { id: 'equipo', label: 'Para mi equipo', message: 'Mi equipo' },
+                { id: 'clientes', label: 'Para mis clientes', message: 'Mis clientes' },
+                { id: 'publico', label: 'Para el público en general', message: 'El público en general' },
+                { id: 'no-se', label: 'Aún no lo sé', unknown: true }
+            ]
+        },
+        {
+            id: 'fase',
+            type: 'choice',
+            when: { tipo: ['idea'] },
+            bot: '¿En qué fase está?',
+            options: [
+                { id: 'idea', label: 'Solo es una idea' },
+                { id: 'prototipo', label: 'Tengo bocetos o un prototipo' },
+                { id: 'version', label: 'Hay una primera versión' },
+                { id: 'usuarios', label: 'Ya tiene usuarios' },
+                { id: 'no-se', label: 'Aún no lo sé', unknown: true }
+            ]
+        },
+        {
+            id: 'situacion',
+            type: 'choice',
+            bot: '¿Y ahora mismo cómo se resuelve?',
+            options: [
+                { id: 'manual', label: 'A mano o con hojas de cálculo' },
+                { id: 'herramienta', label: 'Con una herramienta que se queda corta' },
+                { id: 'nada', label: 'Todavía no se resuelve' },
+                { id: 'no-se', label: 'Aún no lo sé', unknown: true }
+            ]
         },
         {
             id: 'sector',
@@ -61,111 +137,31 @@ window.IBEROHUB_CHATBOT = {
                 { id: 'comercio', label: 'Comercio' },
                 { id: 'hosteleria', label: 'Hostelería' },
                 { id: 'industria', label: 'Industria' },
-                { id: 'otro', label: 'Otro', phrase: 'Otro sector' }
+                { id: 'tecnologia', label: 'Tecnología' },
+                { id: 'otro', label: 'Otro', unknown: true },
+                { id: 'no-decir', label: 'Prefiero no decirlo', unknown: true }
             ]
         },
         {
             id: 'equipo',
             type: 'choice',
-            bot: '¿Cuántas personas sois en el equipo?',
+            bot: '¿Cuántas personas sois?',
             options: [
-                { id: 'solo', label: 'Solo yo', phrase: 'una persona' },
-                { id: '2-10', label: '2 a 10', phrase: '2 a 10 personas' },
-                { id: '11-50', label: '11 a 50', phrase: '11 a 50 personas' },
-                { id: '50+', label: 'Más de 50', phrase: 'más de 50 personas' }
+                { id: 'solo', label: 'Solo yo' },
+                { id: '2-10', label: '2 a 10', message: '2 a 10 personas' },
+                { id: '11-50', label: '11 a 50', message: '11 a 50 personas' },
+                { id: '50+', label: 'Más de 50', message: 'Más de 50 personas' },
+                { id: 'no-decir', label: 'Prefiero no decirlo', unknown: true }
             ]
-        },
-        {
-            id: 'frecuencia',
-            type: 'choice',
-            bot: '¿Con qué frecuencia te pasa el problema?',
-            options: [
-                { id: 'dia', label: 'Cada día', phrase: 'cada día' },
-                { id: 'semana', label: 'Cada semana', phrase: 'cada semana' },
-                { id: 'mes', label: 'Cada mes', phrase: 'cada mes' },
-                { id: 'anio', label: 'Pocas veces al año', phrase: 'pocas veces al año' }
-            ]
-        },
-        {
-            id: 'horas',
-            type: 'choice',
-            bot: '¿Cuántas horas a la semana os cuesta?',
-            options: [
-                { id: '<2', label: 'Menos de 2', phrase: 'menos de 2 horas', month: 'menos de 8 horas' },
-                { id: '2-5', label: '2 a 5', phrase: 'de 2 a 5 horas', month: 'entre 8 y 20 horas' },
-                { id: '5-15', label: '5 a 15', phrase: 'de 5 a 15 horas', month: 'entre 20 y 60 horas' },
-                { id: '15+', label: 'Más de 15', phrase: 'más de 15 horas', month: 'más de 60 horas' }
-            ]
-        },
-        {
-            id: 'busca',
-            type: 'choice',
-            bot: '¿Qué buscas?',
-            options: [
-                { id: 'no-se', label: 'No sé bien qué necesito' },
-                { id: 'idea', label: 'Tengo una idea de producto' },
-                { id: 'automatizar', label: 'Automatizar un proceso' },
-                { id: 'software', label: 'Mejorar un software que ya tengo' }
-            ]
-        },
-        {
-            id: 'problema',
-            type: 'text',
-            bot: 'Cuéntame tu problema en una frase.',
-            fieldLabel: 'Tu problema (opcional)',
-            maxLength: 200,
-            skip: 'Saltar',
-            skipEcho: 'Prefiero contarlo por WhatsApp.'
         }
     ],
 
     result: {
-        /* Variables: {sector} {equipo} {frecuencia} {horas} {mes} */
-        summary: '{sector}, {equipo}. Te pasa {frecuencia} y cuesta {horas} a la semana.',
-        /* Solo si el problema es recurrente: con otra frecuencia el cálculo mensual engañaría. */
-        monthly: {
-            when: { frecuencia: ['dia', 'semana'] },
-            text: 'Eso son {mes} al mes.'
-        },
-        goldenRule: 'La llamada de 20 minutos es gratis. El diagnóstico completo, nunca.',
-        whatsappIntro: 'Sigue por WhatsApp: tus respuestas ya van escritas y concretamos la llamada.',
-        whatsappCta: 'Seguir por WhatsApp'
-    },
-
-    /* Se aplica la primera regla que coincide; el orden importa.
-       Dentro de "when", todas las condiciones deben cumplirse. */
-    rules: [
-        {
-            id: 'no-se',
-            when: { busca: ['no-se'] },
-            service: 'Llamada de 20 minutos gratis',
-            text: 'Si no lo tienes claro, lo mejor es hablarlo. Empezamos por la llamada y, si encaja, el siguiente paso es un Diagnóstico de IA de pago (1.500 €).'
-        },
-        {
-            id: 'automatizar-compensa',
-            when: { busca: ['automatizar'], frecuencia: ['dia', 'semana'], horas: ['5-15', '15+'] },
-            service: 'Automatización con IA',
-            price: 'Desde 6.000 €',
-            text: 'Aquí una automatización suele compensar. En la llamada vemos si es tu caso.'
-        },
-        {
-            /* También recoge "más de 5 horas" con frecuencia mensual o anual, sin regla propia en el spec. */
-            id: 'automatizar-valorar',
-            when: { busca: ['automatizar'] },
-            service: 'Llamada para valorar si compensa',
-            text: 'Con estas cifras no está claro que automatizar compense. Mejor lo vemos en la llamada antes de proponerte nada.'
-        },
-        {
-            id: 'idea',
-            when: { busca: ['idea'] },
-            service: 'Construcción de producto',
-            text: 'Empezaríamos por un MVP con precio cerrado, para probar la idea antes de construir de más.'
-        },
-        {
-            id: 'software',
-            when: { busca: ['software'] },
-            service: 'Revisión de arquitectura',
-            text: 'Antes de tocar nada, revisamos la arquitectura de lo que ya tienes para ver por dónde conviene empezar.'
-        }
-    ]
+        thanks: 'Gracias. Con esto AIVA ya tiene contexto para seguir contigo por WhatsApp.',
+        /* Si la persona no ha dado ningún dato. */
+        empty: 'Sin problema. Si quieres, sigue por WhatsApp y AIVA te ayuda desde ahí.',
+        previewTitle: 'Tu mensaje para WhatsApp',
+        previewNote: 'Lo podrás revisar y cambiar en WhatsApp antes de enviarlo.',
+        whatsappCta: 'Continuar por WhatsApp'
+    }
 };
