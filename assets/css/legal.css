@@ -40,6 +40,13 @@
     margin: 52px 0 14px;
     color: var(--ink);
 }
+.legal h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 21px;
+    margin: 28px 0 10px;
+    color: var(--ink);
+}
 .legal p,
 .legal li {
     font-size: 16px;
